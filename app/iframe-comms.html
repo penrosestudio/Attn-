@@ -1,0 +1,19 @@
+<!-- serve this guy up from the domain with all the content i.e. tiddlyspace.com -->
+<html>
+	<head>
+		<script type="text/javascript" src="http://tiddlyspace.com/bags/attn_public/tiddlers/jquery-1.6.2.js"></script>
+		<script type="text/javascript">
+		var origHost = window.location.host,
+			dotIndex = origHost.lastIndexOf('.'),
+			prevDotIndex = origHost.lastIndexOf('.',dotIndex-1),
+			domain = origHost.substring(prevDotIndex!==-1 ? prevDotIndex+1 : 0);
+		document.domain = domain;
+	    window.parent.$.ajax = function(options){
+			return $.ajax(options);
+	    }
+	    window.parent.crossDomainAjaxLoaded = true;
+		window.parent.$(window.parent.document).trigger('crossDomainAjaxLoaded'); // NB: does this work in Chrome?
+		</script>
+	</head>
+	<body></body>
+</html>

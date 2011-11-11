@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<title>Attn Results!</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="reset.css" />
+		<link rel="stylesheet" type="text/css" href="j-base.css" />
+		<link rel="stylesheet" type="text/css" href="grid.css" />
+		<link rel="stylesheet" type="text/css" href="stickyfooter.css" />
+		<link rel="stylesheet" type="text/css" media="all" href="style.css" />
+	<body class="results">
+		<!-- TO-DO: style this <noscript>You need JavaScript enabled to run Attn!</noscript>-->
+		<div id="wrapper">
+			<div id="metaInfo">
+				<span id="accountID"></span>
+				<a href="mailto:contact@attnbang.com">contact</a>
+			</div>
+			<div class="jbasewrap">
+				<div id="filter">
+					<label for="search">Search / Filter:</label>
+					<input type="text" id="search"/>				
+				</div>
+				<div id="strip">
+					<ul id="attnlist">
+					</ul>
+				</div>				
+			</div> <!-- close .jbasewrap -->
+			<div class="push"></div>
+		</div> <!-- close #wrapper -->
+		<div class="footer">
+					
+        </div>
+		<script type="text/javascript" src="jquery-1.4.1.js"></script>
+		<script type="text/javascript" src="date.js"></script>
+		<script type="text/javascript" src="chrjs.js"></script>
+		<script type="text/javascript" src="jquery-json.min.js"></script>
+		<script type="text/javascript" src="templ.js"></script>
+		<script type="text/javascript" src="attn.js"></script>
+		<script type="text/javascript">
+			var attnTestTiddlers = attnTestTiddlers = [{"created": "20110721204941", "fields": {"_hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709"}, "creator": "jnthnlstr", "recipe": null, "modified": "20110721204941", "bag": "attn_jnthnlstr_20110721", "title": "1311270577097", "permissions": ["read", "write", "create", "delete"], "modifier": "jnthnlstr", "type": null, "tags": ["attn", "project:off"], "revision": 471551},
+				{"created": "20110721204920", "fields": {"_hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709"}, "creator": "jnthnlstr", "recipe": null, "modified": "20110721204920", "bag": "attn_jnthnlstr_20110721", "title": "1311281356433", "permissions": ["read", "write", "create", "delete"], "modifier": "jnthnlstr", "type": null, "tags": ["attn", "project:off"], "revision": 471550},
+				{"created": "20110721204902", "fields": {"_hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709"}, "creator": "jnthnlstr", "recipe": null, "modified": "20110721204902", "bag": "attn_jnthnlstr_20110721", "title": "1311281337675", "permissions": ["read", "write", "create", "delete"], "modifier": "jnthnlstr", "type": null, "tags": ["attn", "project:bpsf"], "revision": 471549},
+				{"created": "20110721153910", "fields": {"_hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709"}, "creator": "jnthnlstr", "recipe": null, "modified": "20110721153910", "bag": "attn_jnthnlstr_20110721", "title": "1311262745468", "permissions": ["read", "write", "create", "delete"], "modifier": "jnthnlstr", "type": null, "tags": ["attn", "project:evo"], "revision": 471267},
+				/*only use this to test out the getEvents function */
+				//{"created": "20110719153703", "fields": {"_hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709"}, "creator": "jnthnlstr", "recipe": null, "modified": "20110720155404", "bag": "attn_jnthnlstr_20110719", "title": "1311089774592", "permissions": ["read", "write", "create", "delete"], "modifier": null, "type": null, "tags": [], "revision": 469036},
+				{"created": "20110720071005", "fields": {"_hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709"}, "creator": "jnthnlstr", "recipe": null, "modified": "20110720071005", "bag": "attn_jnthnlstr_20110720", "title": "1311145755578", "permissions": ["read", "write", "create", "delete"], "modifier": "jnthnlstr", "type": null, "tags": ["attn", "project:yo"], "revision": 468328},
+				{"created": "20110719222746", "fields": {"_hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709"}, "creator": "jnthnlstr", "recipe": null, "modified": "20110719222746", "bag": "attn_jnthnlstr_20110719", "title": "1311114416971", "permissions": ["read", "write", "create", "delete"], "modifier": "jnthnlstr", "type": null, "tags": ["attn", "project:yo"], "revision": 467516}];
+			$(document).ready(function() {
+				var i,
+					attnday_templ = tmpl("attnday_templ"),
+					html = "",
+					periods = attn.createPeriods(attnTestTiddlers, function() {
+						var duration = attn.formatDuration(this.duration),
+							hours = duration.hours,
+							minutes = duration.minutes,
+							seconds = duration.seconds,
+							durBits = [];
+						this.starttime = this.startDate.toString("h:mmtt").toLowerCase();
+						this.endtime = this.endDate.toString("h:mmtt").toLowerCase();
+						if(hours) {
+							durBits.push(hours===1 ? hours+'hr' : hours+'hrs');
+						}
+						if(minutes) {
+							durBits.push(minutes===1 ? minutes+'min' : minutes+'min');
+						}
+						if(seconds) {
+							durBits.push(seconds+"s");
+						}
+						this.durationString = durBits.join(" ");
+					}),
+					days = attn.daysFromPeriods(periods,"dd.MM.yyyy");
+				for(i=days.length-1;i>=0;i--) {
+					html += attnday_templ(days[i]);
+				}
+				$('#attnlist').html(html);
+				$('#wrapper').width('100%');
+			});
+		</script>
+		<script type="text/html" id="attnday_templ">
+			<li>
+				<h3><%=date%></h3>
+				<ul class="attnevent">
+					<% for(var i=periods.length-1; i>=0; i--) { if(periods[i].duration) { %>
+					<li>
+						<span class="project"><%=periods[i].project%></span>
+						<span class="time"><%=periods[i].starttime%> - <%=periods[i].endtime%></span>
+						<span class="period"><%=periods[i].durationString%></span>
+						<!--<span class="notes"><%=periods[i].notes%></span>-->
+					</li>
+					<% } } %>
+				</ul>
+			</li>
+		</script>
+	<!--	<script type="text/javascript" src="attn.js"></script>
+		<script type="text/javascript" src="app.js"></script>-->
+		<!--[if (gte IE 6)&(lte IE 8)]>
+		  <script type="text/javascript" src="selectivizr.min.js"></script>
+		<![endif]--> 
+	</body>
+</html>

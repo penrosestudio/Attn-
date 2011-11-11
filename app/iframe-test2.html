@@ -1,0 +1,96 @@
+<!-- this guy sits on the main domain e.g. tiddlyspace.com -->
+<html>
+	<head>
+	</head>
+	<body>
+		<span>iFrame comms status:</span><span id="iframe-comms-status"></span><br />
+		<button id="status">check status</button><span id="statusResult"></span><br />
+		<label for="bagPath">Bag path:</label><input type="text" id="bagPath" /><br />
+		<button id="bag">create the bag (PUT)</button><span id="bagResult"></span><br />
+		<button id="tiddlerPUT">PUT a tiddler into that bag</button><span id="tiddlerPUTResult"></span><br />
+		<button id="delete">delete that bag (DELETE)</button><span id="deleteResult"></span>
+		<style type="text/css">
+			#iFrameComms {
+				display: none;
+			}
+		</style>
+		<script type="text/javascript" src="jquery-1.6.2.js"></script>
+		<script type="text/javascript" src="jquery-json.min.js"></script>
+		<script type="text/javascript" src="jquery.ba-postmessage.min.js"></script>
+		<script type="text/javascript" src="iframe-comms2.js"></script>
+		<script type="text/javascript">
+			function statusTest() {
+				$.ajax({
+					url: "/status",
+					success: function(data) {
+						if(typeof data==="object") {
+		        			data = JSON.stringify(data);
+		        		}
+						$('#statusResult').text(data);
+						console.log('status success',arguments);
+					},
+					error: function(xhr) {
+						$('#statusResult').text(xhr.statusText);
+						console.log('status error',arguments);
+					}
+				});
+			}
+			function bagCreateTest() {
+				$.ajax({
+		        	url: "/bags/"+$('#bagPath').val(),
+		        	contentType: "application/json",
+		        	type: "PUT",
+		        	data: $.toJSON({}),
+		        	success: function(data) {
+		        		if(typeof data==="object") {
+		        			data = JSON.stringify(data);
+		        		}
+		        		$('#bagResult').text("success: "+data);
+						console.log('bag success',arguments);
+		        	},
+		        	error: function(xhr) {
+						$('#bagResult').text("error: "+xhr.statusText);
+						console.log('bag error',arguments);
+		        	}
+				});
+			}
+			function tiddlerCreateTest() {
+				// not yet
+			}
+			function deleteTest() {
+				$.ajax({
+		        	url: "/bags/"+$('#bagPath').val(),
+		        	type: "DELETE",
+		        	success: function(data) {
+		        		if(typeof data==="object") {
+		        			data = JSON.stringify(data);
+		        		}
+		        		$('#deleteResult').text("success: "+data);
+						console.log('delete success',arguments);
+		        	},
+		        	error: function(xhr) {
+						$('#deleteResult').text("error: "+xhr.statusText);
+						console.log('delete error',arguments);
+		        	}
+				});
+			}
+			$(document).ready(function() {
+				$(document).bind('crossDomainAjaxLoaded', function() {
+					$('#iframe-comms-status').text('iframe-comms loaded');
+				});
+				$('#status').click(function() {
+					statusTest();
+				});
+				$('#bag').click(function() {
+					bagCreateTest();
+				});
+				$('#tiddlerPUT').click(function() {
+					tiddlerCreateTest();
+				});
+				$('#delete').click(function() {
+					deleteTest();
+				});
+			});
+		</script>
+	</body>
+</html>

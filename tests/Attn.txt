@@ -1,0 +1,28 @@
+Attn!
+
+The basic app:
+- should understand commands as "<project> <action> <timeMod>", where <project> can be "off" or a project, <action> can be "bill" or a set of tags, and timeMod can be of the form "10", "-10", "10m", "-10m", "14:36", "14:35 yesterday", "12:00 2nd March", "14:00 last Thursday" - DONE
+- should create an attn event when I hit enter - this means create an object with properties: 'title' as the epoch time of the attn event, 'text' as the notes and 'tags' as ['attn', <tags>], where <tags> are any tags I typed into the command line - DONE
+- should have helper text below, that at its most basic says 'Switch to "<project>" now' - DONE
+-- there is "action helper text" e.g. 'Switch to "<project>" now' and "info helper text" e.g. '"w" is not a valid time modification' 
+- should save my attn to a TiddlySpace - DONE
+- should run from a http:// URL, not from a file
+-- should see if you're logged in
+--- if you're not logged in, should offer you a login interface instead of the standard interface
+--- if you're not logged in, should show a contact link in the top-right
+--- if you are logged in, should show your login ID in the top-right, next to the contact link
+-- should save to a bag created from my login ID (thus working for anyone who is logged in)
+-- should run from http://attn.tiddlyspace.com
+- should open a box for notes under the command line when I create the attn event
+- should let me edit the notes more than once
+- should save the attn event again when I add (or later edit) the notes, and save it to the TiddlySpace
+
+With Spool, Attn:
+- should recover from a failed PUT by trying again periodically until the resource is saved to the server
+- should store unsynced attn events even if the app is reloaded (which covers browsers being closed and reopened)
+- should make it clear when there are attn events that haven't been synced to the TiddlySpace
+- should save multiple versions of the same resource in the order they were created, so changes to notes don't get overwritten
+
+It also:
+- should show me recently used projects when I focus on the text box, and should filter those projects as I type
+- should give me hints as I type: once I've pressed space once, it should say that I can add an action, a time modification or hit enter

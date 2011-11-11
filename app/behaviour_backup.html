@@ -1,0 +1,534 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if lt IE 7]> <html lang="en-us" class="no-js ie6"> <![endif]--> 
+<!--[if IE 7]>    <html lang="en-us" class="no-js ie7"> <![endif]--> 
+<!--[if IE 8]>    <html lang="en-us" class="no-js ie8"> <![endif]--> 
+<!--[if gt IE 8]><!--> <html lang="en-us" class="no-js"> <!--<![endif]--> 
+	<head>
+		<title>Attn!</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="reset.css" />
+		<link rel="stylesheet" type="text/css" href="j-base.css" />
+		<link rel="stylesheet" type="text/css" href="grid.css" />
+		<link rel="stylesheet" type="text/css" href="stickyfooter.css" />
+		<link rel="stylesheet" type="text/css" media="all" href="style.css" />
+	<body>
+		<div id="header">
+		<a href="#" id="accountID" class="button">Not logged in</a>
+		<a href="#" class="button">Contact</a>
+		</div>
+		<div id="wrapper">
+			<div id="login" class="screen">
+				<form id="loginForm">
+					<label for="loginID">Email</label>
+					<input id="loginID" name="loginID" type="text" />
+					<label for="password">Password</label>
+					<input id="password" name="password" type="password" />
+					<br class="clearboth"/>
+					<input type="submit" name="submitButton" value="Log in" />
+					<p id="loginError">There was a problem with logging in, please try again</p>
+				</form>
+			</div>
+			<div id="input" class="screen">
+				<div class="container">
+					<input id="attn"/>
+					<ul>
+						<li class="selected" id="actionText"></li>
+					</ul>
+					<span id="infoText">not activated - please login</span>
+					<textarea id="notes"></textarea>
+				</div>
+				<button class="left">left</button>
+				<button class="right">right</button>
+			</div>
+			<div id="analysis" class="screen">
+				<div class="jbasewrap strip">
+					<ul id="attnlist">
+						<li>
+							<h3>19.09.88</h3>
+							<ul class="attnevent">
+								<li>
+									<div class="project"><p class="projectedit" contenteditable="true">project</p><div class="editableToolbar"><a class="tick" href="#">save</a><a class="cross" href="#">cancel</a></div></div>
+									<div class="time"><span class="timeedit">6:45pm – 7:34pm</span></div>
+									<div class="period"><span class="periodedit">2h 38m</span></div>
+									<div class="notes"><p class="notesedit" contenteditable="true">Body Text: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><div class="editableToolbar"><a class="tick" href="#">save</a><a class="cross" href="#">cancel</a></div></div>
+								</li>
+								<li>
+									<div class="project"><p class="projectedit">project</p></div>
+									<div class="time"><span class="timeedit">6:45pm – 7:34pm</span></div>
+									<div class="period"><span class="periodedit">2h 38m</span></div>
+									<div class="notes"><p class="notesedit">Body Text: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></div>
+								</li>
+								<li>
+									<span class="project" >project</span>
+									<span class="time" >6:45pm – 7:34pm</span>
+									<span class="period">2h 38m</span>
+									<span class="notes">Body Text: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
+								</li>
+								<li>
+									<span class="project" ><span class="" contenteditable="true">project</span></span>
+									<span class="time"><span class="startTime" contenteditable="true">11:23am</span> – <span class="endTime" contenteditable="true">12:54pm</span></span>
+									<span class="period">1h 31m</span>
+									<span class="notes" contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</span>
+								</li>
+								<li>
+									<span class="project">project</span>
+									<span class="time">11:23am – 12:54pm</span>
+									<span class="period">1h 31m</span>
+									<span class="notes">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</span>
+								</li>
+								<li>
+									<span class="project">project</span>
+									<span class="time">time</span>
+									<span class="period">period</span>
+									<!--<span class="notes">notes</span>-->
+								</li>
+							</ul>
+						</li>
+						<li>
+							<h3>19.09.88</h3>
+							<ul class="attnevent">
+								<li>
+									<span class="project">project</span>
+									<span class="time">time</span>
+									<span class="period">period</span>
+									<!--<span class="notes">notes</span>-->
+								</li>
+								<li>
+									<span class="project">project</span>
+									<span class="time">time</span>
+									<span class="period">period</span>
+									<!--<span class="notes">notes</span>-->
+								</li>
+								<li>
+									<span class="project">project</span>
+									<span class="time">time</span>
+									<span class="period">period</span>
+									<!--<span class="notes">notes</span>-->
+								</li>
+								<li>
+									<span class="project">project</span>
+									<span class="time">time</span>
+									<span class="period">period</span>
+									<!--<span class="notes">notes</span>-->
+								</li>
+								<li>
+									<span class="project">project</span>
+									<span class="time">time</span>
+									<span class="period">period</span>
+									<!--<span class="notes">notes</span>-->
+								</li>
+							</ul>
+						</li>
+						<li>
+							<h3>19.09.88</h3>
+							<ul class="attnevent">
+								<li>
+									<span class="project">project</span>
+									<span class="time">time</span>
+									<span class="period">period</span>
+									<!--<span class="notes">notes</span>-->
+								</li>
+								<li>
+									<span class="project">project</span>
+									<span class="time">time</span>
+									<span class="period">period</span>
+									<!--<span class="notes">notes</span>-->
+								</li>
+								<li>
+									<span class="project">project</span>
+									<span class="time">time</span>
+									<span class="period">period</span>
+									<!--<span class="notes">notes</span>-->
+								</li>
+							</ul>
+						</li>
+						<li>
+							<h3>19.09.88</h3>
+							<ul class="attnevent">
+								<li>
+									<span class="project">project</span>
+									<span class="time">time</span>
+									<span class="period">period</span>
+									<!--<span class="notes">notes</span>-->
+								</li>
+								<li>
+									<span class="project">project</span>
+									<span class="time">time</span>
+									<span class="period">period</span>
+									<!--<span class="notes">notes</span>-->
+								</li>
+							</ul>
+						</li>
+						<li>
+							<h3>19.09.88</h3>
+							<ul class="attnevent">
+								<li>
+									<span class="project">project</span>
+									<span class="time">time</span>
+									<span class="period">period</span>
+									<!--<span class="notes">notes</span>-->
+								</li>
+								<li>
+									<span class="project">project</span>
+									<span class="time">time</span>
+									<span class="period">period</span>
+									<!--<span class="notes">notes</span>-->
+								</li>
+								<li>
+									<span class="project">project</span>
+									<span class="time">time</span>
+									<span class="period">period</span>
+									<!--<span class="notes">notes</span>-->
+								</li>
+							</ul>
+						</li>
+						<li>
+							<h3>19.09.88</h3>
+							<ul class="attnevent">
+								<li>
+									<span class="project">project</span>
+									<span class="time">time</span>
+									<span class="period">period</span>
+									<!--<span class="notes">notes</span>-->
+								</li>
+							</ul>
+						</li>
+						<li>
+							<h3>19.09.88</h3>
+							<ul class="attnevent">
+								<li>
+									<span class="project">project</span>
+									<span class="time">time</span>
+									<span class="period">period</span>
+									<!--<span class="notes">notes</span>-->
+								</li>
+								<li>
+									<span class="project">project</span>
+									<span class="time">time</span>
+									<span class="period">period</span>
+									<!--<span class="notes">notes</span>-->
+								</li>
+							</ul>
+						</li>
+						<li>
+							<h3>19.09.88</h3>
+							<ul class="attnevent">
+								<li>
+									<span class="project">project</span>
+									<span class="time">time</span>
+									<span class="period">period</span>
+									<!--<span class="notes">notes</span>-->
+								</li>
+							</ul>
+						</li>
+						<li>
+							<h3>19.09.88</h3>
+							<ul class="attnevent">
+								<li>
+									<span class="project">project</span>
+									<span class="time">time</span>
+									<span class="period">period</span>
+									<!--<span class="notes">notes</span>-->
+								</li>
+							</ul>
+						</li>
+						<li>
+							<h3>19.09.88</h3>
+							<ul class="attnevent">
+								<li>
+									<span class="project">project</span>
+									<span class="time">time</span>
+									<span class="period">period</span>
+									<!--<span class="notes">notes</span>-->
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div id="teamanalysis" class="screen">
+				<div class="jbasewrap strip">
+					<h2>Team Analysis</h2>
+					
+					<div id="teamTable">
+						<div class="row names">
+							<div class="cell project">
+
+							</div>
+							<div class="cell" id="two">
+								<span>Ben Lovedale</span>
+							</div>	
+							<div class="cell" id="three">
+								<span>Clive Sall</span>
+							</div>
+							<div class="cell">
+								<span>Daisy Goodie</span>
+							</div>
+							<div class="cell">
+								<span>Jonas Brother</span>
+							</div>
+							<div class="cell">
+								<span>Miguel Enfant</span>
+							</div>
+							<div class="cell">
+								<span>Colin Bowel</span>
+							</div>
+							 <div class="cell">
+								<span>Harmony Bergman</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell project">
+								HSD
+							</div>
+							<div class="cell">
+								1:24
+							</div>	
+							<div class="cell">
+								4:12
+							</div>
+							<div class="cell">
+								1:09
+							</div>
+							<div class="cell">
+								6:19
+							</div>
+							<div class="cell">
+								1:06
+							</div>
+							<div class="cell">
+								2:43
+							</div>
+							 <div class="cell">
+								1:37
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell project">
+								Comstat
+							</div>
+							<div class="cell">
+								1:24
+							</div>	
+							<div class="cell">
+								4:12
+							</div>
+							<div class="cell">
+								1:09
+							</div>
+							<div class="cell">
+								6:19
+							</div>
+							<div class="cell">
+								1:06
+							</div>
+							<div class="cell">
+								2:43
+							</div>
+							 <div class="cell">
+								1:37
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell project">
+								Billion
+							</div>
+							<div class="cell">
+								1:24
+							</div>	
+							<div class="cell">
+								4:12
+							</div>
+							<div class="cell">
+								1:09
+							</div>
+							<div class="cell">
+								6:19
+							</div>
+							<div class="cell">
+								1:06
+							</div>
+							<div class="cell">
+								2:43
+							</div>
+							 <div class="cell">
+								1:37
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell project">
+								BP
+							</div>
+							<div class="cell">
+								1:24
+							</div>	
+							<div class="cell">
+								4:12
+							</div>
+							<div class="cell">
+								1:09
+							</div>
+							<div class="cell">
+								6:19
+							</div>
+							<div class="cell">
+								1:06
+							</div>
+							<div class="cell">
+								2:43
+							</div>
+							 <div class="cell">
+								1:37
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell project">
+								HSD
+							</div>
+							<div class="cell">
+								1:24
+							</div>	
+							<div class="cell">
+								4:12
+							</div>
+							<div class="cell">
+								1:09
+							</div>
+							<div class="cell">
+								6:19
+							</div>
+							<div class="cell">
+								1:06
+							</div>
+							<div class="cell">
+								2:43
+							</div>
+							 <div class="cell">
+								1:37
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell project">
+								Comstat
+							</div>
+							<div class="cell">
+								1:24
+							</div>	
+							<div class="cell">
+								4:12
+							</div>
+							<div class="cell">
+								1:09
+							</div>
+							<div class="cell">
+								6:19
+							</div>
+							<div class="cell">
+								1:06
+							</div>
+							<div class="cell">
+								2:43
+							</div>
+							 <div class="cell">
+								1:37
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell project">
+								Billion
+							</div>
+							<div class="cell">
+								1:24
+							</div>	
+							<div class="cell">
+								4:12
+							</div>
+							<div class="cell">
+								1:09
+							</div>
+							<div class="cell">
+								6:19
+							</div>
+							<div class="cell">
+								1:06
+							</div>
+							<div class="cell">
+								2:43
+							</div>
+							 <div class="cell">
+								1:37
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell project">
+								BP
+							</div>
+							<div class="cell">
+								1:24
+							</div>	
+							<div class="cell">
+								4:12
+							</div>
+							<div class="cell">
+								1:09
+							</div>
+							<div class="cell">
+								6:19
+							</div>
+							<div class="cell">
+								1:06
+							</div>
+							<div class="cell">
+								2:43
+							</div>
+							 <div class="cell">
+								1:37
+							</div>
+						</div>
+					
+					</div>
+					
+					
+					
+					
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<img src="attn_logo.png"/>
+		</div>
+		<script type="text/html" id="attnday_templ">
+			<li>
+				<h3><%=date%></h3>
+				<ul class="attnevent">
+					<% for(var i=periods.length-1; i>=0; i--) { %>
+					<li>
+						<div class="project">
+							<p class="projectedit" contenteditable="true"><%=periods[i].project%></p>
+							<div class="editableToolbar">
+								<a class="tick" href="#">save</a><a class="cross" href="#">cancel</a>
+							</div>
+						</div>
+						<div class="time"><span class="timeedit"><%=periods[i].starttime%> <% if(periods[i].end) {%>- <%=periods[i].endtime%><% } else {%>(open)<%}%></span></div>
+						<div class="period"><span class="periodedit"><%=periods[i].durationString%></span></div>
+						<div class="notes">
+							<p class="notesedit" contenteditable="true"><%=periods[i].notes%></p>
+							<div class="editableToolbar">
+								<a class="tick" href="#">save</a><a class="cross" href="#">cancel</a>
+							</div>
+						</div>
+					</li>
+					<% } %>
+				</ul>
+			</li>
+		</script>
+		<script type="text/javascript" src="jquery-1.6.2.js"></script>
+		<script type="text/javascript" src="date.js"></script>
+		<script type="text/javascript" src="chrjs.js"></script>
+		<script type="text/javascript" src="jquery-json.min.js"></script>
+		<script type="text/javascript" src="iframe-comms.js"></script>
+		<script type="text/javascript" src="templ.js"></script>
+		<script type="text/javascript" src="attn.js"></script>
+		<script type="text/javascript" src="app.js"></script>
+	</body>
+</html>

@@ -1,0 +1,49 @@
+<!-- this guy sits on the sub-domain e.g. attn-test.tiddlyspace.com -->
+<html>
+	<head>
+		<script type="text/javascript" src="jquery-1.4.1.js"></script>
+		<script type="text/javascript" src="jquery-json.min.js"></script>
+		<script type="text/javascript" src="jquery.ba-postmessage.min.js"></script>
+		<script type="text/javascript">
+			function sendResult(status,data) {
+				var message = {
+					status: status,
+					data: data
+				}
+				$.postMessage(
+					message,
+					'http://attnbang.com/iframe-test2',
+					parent
+				);
+			}
+			$(document).ready(function() {
+				$.receiveMessage(
+					function(e){
+						console.log('message received');
+						var data = e.data,
+							options = {};
+						$.each(data.split("&"), function(i,pair) {
+							var pieces = pair.split("="),
+								key = pieces[0],
+								value = decodeURIComponent(pieces[1]);
+							if(value!=="undefined") {
+								options[key] = value;
+							}
+						});
+						options.success = function(data) {
+							sendResult("success",data);
+						};
+						options.error = function(xhr) {
+							sendResult("error",xhr.status);
+						};
+						$.ajax(options);
+					},
+					"http://attnbang.com"
+				);
+			});	
+		</script>
+	</head>
+	<body>
+		<p>this is the child frame</p>
+	</body>
+</html>

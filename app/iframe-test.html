@@ -1,0 +1,30 @@
+<!-- this guy sits on the sub-domain e.g. attn-test.tiddlyspace.com -->
+<html>
+	<head>
+		<script type="text/javascript" src="jquery-1.4.1.js"></script>
+		<script type="text/javascript" src="jquery-json.min.js"></script>
+		<script type="text/javascript" src="iframe-comms.js"></script>
+		<script type="text/javascript">
+			function showResult(data) {
+				$('body').append("<p>success!</p>");
+			}
+			function putTest() {
+		        $.ajax({
+		        	url: "/bags/attn_jnthnlstr_20110719/tiddlers/1311089774592",
+		        	contentType: "application/json",
+		        	type: "PUT",
+		        	data: $.toJSON({}),
+		        	success: showResult
+				});
+			}
+			$(document).ready(function() {
+				$('button').click(function() {
+					putTest();
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<button>click me to test a PUT to tiddlyspace.com!</button>
+	</body>
+</html>
