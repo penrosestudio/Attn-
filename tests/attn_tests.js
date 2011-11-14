@@ -853,6 +853,11 @@ $(document).ready(function() {
 		equals(actual,expected);
 	});
 	
+	test("it should return null for a tiddler with no tags", function() {
+		var project = attn.getProject({});
+		ok(!project, "return no project for tiddler with no tags");
+	});
+	
 	module("analysing periods - createPeriods", {
 		setup: function() {
 			this.testTiddlers = attnTestTiddlers
@@ -1030,7 +1035,14 @@ $(document).ready(function() {
 		attn.getEvents(callback);
 	});
 	
-	module("analysing periods - addEvent");
+	module("analysing periods - addEvent", {
+		setup: function() {
+			this.attnTestTiddlers = attnTestTiddlers;
+		},
+		teardown: function() {
+			attnTestTiddlers = this.attnTestTiddlers;
+		}
+	});
 	
 	test("it should add the provided event to the saved array of events in chronological position", function() {
 		var tmpAjax = $.ajax,
@@ -1099,13 +1111,13 @@ $(document).ready(function() {
 	*/
 	module("live filtering", {
 		setup: function() {
-			this.periods = attn.createPeriods(attnTestTiddlers);
+			attn.createPeriods(attnTestTiddlers);
 		}
 	});
 	
 	test("given an empty string, it should return all the periods", function() {
-		var actual = attn.filterPeriods(""),
-			expected = attnTestTiddlers;
+		var actual = attn.filterPeriods("").length,
+			expected = attn.attnPeriods.length;
 		equals(actual, expected);
 	});
 	
@@ -1113,7 +1125,7 @@ $(document).ready(function() {
 		var actual,
 			expected;
 		actual = attn.filterPeriods("o").length;
-		expected = 3;
+		expected = 4;
 		equals(actual, expected);
 		actual = attn.filterPeriods("yo").length;
 		expected = 2;
@@ -1125,7 +1137,7 @@ $(document).ready(function() {
 		expected = 0;
 		equals(actual, expected);
 		actual = attn.filterPeriods("").length;
-		expected = 5;
+		expected = 6;
 		equals(actual, expected);
 	});
 	
@@ -1142,7 +1154,7 @@ $(document).ready(function() {
 		expected = 0;
 		equals(actual, expected);
 		actual = attn.filterPeriods('notes:').length;
-		expected = 6;
+		expected = 3;
 		equals(actual, expected);
 	});
 	
@@ -1159,7 +1171,7 @@ $(document).ready(function() {
 		expected = 0;
 		equals(actual, expected);
 		actual = attn.filterPeriods('notes:""').length;
-		expected = 6;
+		expected = 3;
 		equals(actual, expected);
 	});
 	

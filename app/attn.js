@@ -10,6 +10,7 @@ var debug = false,
 	},
 	attn = {
 		attnEvents: [],
+		attnPeriods: [],
 		attnEventPending: "AttnEventPending",
 		attnEventCreated: "AttnEventCreated",
 		attnEventSaved: "AttnEventSaved",
@@ -315,6 +316,9 @@ var debug = false,
 		getProject: function(tiddler) {
 			var project,
 				projectPrefix = "project:";
+			if(!tiddler.tags) {
+				return;
+			}
 			$.each(tiddler.tags, function(i, tag) {
 				if(tag.indexOf(projectPrefix)===0) {
 					project = tag.substring(projectPrefix.length);
@@ -322,6 +326,44 @@ var debug = false,
 				}
 			});
 			return project;
+		},
+		filterPeriods: function(filterString) {
+			var filteredPeriods = [],
+				periods = attn.attnPeriods,
+				property;
+			if(!periods) {
+				return;
+			}
+			
+			if (!filterString) {
+				return periods;
+			}
+			
+			if (filterString.indexOf("notes:")===0) {
+				property = "notes";
+				filterString = filterString.substring(6);
+				if (filterString.indexOf('"')===0 && filterString.lastIndexOf('"')===filterString.length-1) {
+					filterString = filterString.substring(1, filterString.length-1);	
+				}
+			} else {
+				property = "project";
+			}
+			
+			
+			
+			filteredPeriods = jQuery.grep( periods, function(period, i) {
+				var toTest = period[property];
+				if($.isArray(toTest)) {
+					toTest = toTest[0];
+				}
+				if (toTest && toTest.indexOf(filterString)!==-1) {
+					return true;
+				}
+			});
+			
+			
+			
+			return filteredPeriods;
 		},
 		createPeriods: function(tiddlers, periodCallback) {
 			var periods = [],
@@ -393,6 +435,7 @@ var debug = false,
 			if(period) { // create an unfinished period
 				savePeriod(period);
 			}
+			attn.attnPeriods = periods;
 			return periods;
 		},
 		epochFormat: function(epoch,format) {
