@@ -1088,6 +1088,138 @@ $(document).ready(function() {
 		equals(attn.attnEvents[4].text,testText);
 	});
 	
+	/***** live filter ****/
+	/*
+		typing a word filters by ‘project’
+		typing ‘notes:text’ filters by notes field
+		typing ‘to:text’ filters by date, or marker
+		typing ‘from:text’ filters by date, or marker
+		combinations of the above
+		generates permalink
+	*/
+	module("live filtering", {
+		setup: function() {
+			this.periods = attn.createPeriods(attnTestTiddlers);
+		}
+	});
+	
+	test("given an empty string, it should return all the periods", function() {
+		var actual = attn.filterPeriods(""),
+			expected = attnTestTiddlers;
+		equals(actual, expected);
+	});
+	
+	test("given a plain word, it should return all periods with that word matching any part of a project", function() {
+		var actual,
+			expected;
+		actual = attn.filterPeriods("o").length;
+		expected = 3;
+		equals(actual, expected);
+		actual = attn.filterPeriods("yo").length;
+		expected = 2;
+		equals(actual, expected);
+		actual = attn.filterPeriods("vo").length;
+		expected = 1;
+		equals(actual, expected);
+		actual = attn.filterPeriods("blah").length;
+		expected = 0;
+		equals(actual, expected);
+		actual = attn.filterPeriods("").length;
+		expected = 5;
+		equals(actual, expected);
+	});
+	
+	test("given a string like 'notes:text', it should return all periods that have notes fields that include 'text'", function() {
+		var actual,
+			expected;
+		actual = attn.filterPeriods("notes:note").length;
+		expected = 2;
+		equals(actual, expected);
+		actual = attn.filterPeriods("notes:second").length;
+		expected = 1;
+		equals(actual, expected);
+		actual = attn.filterPeriods("notes:blah").length;
+		expected = 0;
+		equals(actual, expected);
+		actual = attn.filterPeriods('notes:').length;
+		expected = 6;
+		equals(actual, expected);
+	});
+	
+	test("given a string like 'notes:\"text here\"', it should return all periods that have notes fields that include 'text here'", function() {
+		var actual,
+			expected;
+		actual = attn.filterPeriods('notes:"a note"').length;
+		expected = 2;
+		equals(actual, expected);
+		actual = attn.filterPeriods('notes:"second note"').length;
+		expected = 1;
+		equals(actual, expected);
+		actual = attn.filterPeriods('notes:"blah note"').length;
+		expected = 0;
+		equals(actual, expected);
+		actual = attn.filterPeriods('notes:""').length;
+		expected = 6;
+		equals(actual, expected);
+	});
+	
+	test("given a string like to:'July 20th', it should return the periods that start pre-July 21st", function() {
+		var actual,
+			expected;
+		actual = attn.filterPeriods('to:"July 22nd"').length;
+		expected = 5;
+		equals(actual, expected);
+		actual = attn.filterPeriods('to:"July 20th"').length;
+		expected = 2;
+		equals(actual, expected);
+		actual = attn.filterPeriods('to:"July 18th"').length;
+		expected = 0;
+		equals(actual, expected);
+		actual = attn.filterPeriods('to:""').length;
+		expected = 6;
+		equals(actual, expected);
+		actual = attn.filterPeriods('to:').length;
+		expected = 6;
+		equals(actual, expected);
+	});
+
+	test("given a string like from:'July 20th', it should return the periods that start after July 19th", function() {
+		var actual,
+			expected;
+		actual = attn.filterPeriods('from:"July 22nd"').length;
+		expected = 0;
+		equals(actual, expected);
+		actual = attn.filterPeriods('from:"July 20th"').length;
+		expected = 4;
+		equals(actual, expected);
+		actual = attn.filterPeriods('from:"July 18th"').length;
+		expected = 6;
+		equals(actual, expected);
+		actual = attn.filterPeriods('from:""').length;
+		expected = 6;
+		equals(actual, expected);
+		actual = attn.filterPeriods('from:').length;
+		expected = 6;
+		equals(actual, expected);
+	});
+	
+	test("given combinations of the filters, it should return the periods that match all the filters", function() {
+		var actual,
+			expected;
+		actual = attn.filterPeriods('o from:"July 20th"').length;
+		expected = 4;
+		equals(actual, expected);
+		actual = attn.filterPeriods('to:"July 20th" from:"July 20th"').length;
+		expected = 1;
+		equals(actual, expected);
+		actual = attn.filterPeriods('yo notes:note').length;
+		expected = 1;
+		equals(actual, expected);
+		actual = attn.filterPeriods('yo from:"July 20th" to:"July 22nd"').length;
+		expected = 1;
+		equals(actual, expected);
+	});
+
 });
 
 attnTestTiddlers = [
@@ -1097,7 +1229,7 @@ attnTestTiddlers = [
 	{"created": "20110721153910", "fields": {"_hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709"}, "creator": "jnthnlstr", "recipe": null, "modified": "20110721153910", "bag": "attn_jnthnlstr_20110721", "title": "1311262745468", "permissions": ["read", "write", "create", "delete"], "modifier": "jnthnlstr", "type": null, "tags": ["attn", "project:evo"], "revision": 471267}, // Thu Jul 21 2011 16:39:05 GMT+0100 (BST)
 	/*only use this to test out the getEvents function */
 	//{"created": "20110719153703", "fields": {"_hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709"}, "creator": "jnthnlstr", "recipe": null, "modified": "20110720155404", "bag": "attn_jnthnlstr_20110719", "title": "1311089774592", "permissions": ["read", "write", "create", "delete"], "modifier": null, "type": null, "tags": [], "revision": 469036},
-	{"created": "20110720071005", "fields": {"_hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709"}, "creator": "jnthnlstr", "recipe": null, "modified": "20110720071005", "bag": "attn_jnthnlstr_20110720", "title": "1311145755578", "permissions": ["read", "write", "create", "delete"], "modifier": "jnthnlstr", "type": null, "tags": ["attn", "project:yo"], "revision": 468328}, // Wed Jul 20 2011 08:09:15 GMT+0100 (BST)
+	{"created": "20110720071005", "fields": {"_hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709"}, "creator": "jnthnlstr", "recipe": null, "modified": "20110720071005", "bag": "attn_jnthnlstr_20110720", "title": "1311145755578", "permissions": ["read", "write", "create", "delete"], "modifier": "jnthnlstr", "type": null, "text": ["I am a note, I am a second note"], "tags": ["attn", "project:yo"], "revision": 468328}, // Wed Jul 20 2011 08:09:15 GMT+0100 (BST)
 	{"created": "20110719222746", "fields": {"_hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709"}, "creator": "jnthnlstr", "recipe": null, "modified": "20110719222746", "bag": "attn_jnthnlstr_20110719", "title": "1311114416971", "permissions": ["read", "write", "create", "delete"], "modifier": "jnthnlstr", "type": null, "tags": ["attn", "project:yo"], "revision": 467516}]; // Tue Jul 19 2011 23:26:56 GMT+0100 (BST)
 
 /* these have earliest first instead of most recent
