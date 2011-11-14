@@ -162,4 +162,151 @@ $(document).ready(function() {
 			.trigger(e);
 		expect(1);
 	});
+	
+	/***** live filter ****/
+	/*
+		typing a word filters by ‘project’
+		typing ‘notes:text’ filters by notes field
+		typing ‘to:text’ filters by date, or marker
+		typing ‘from:text’ filters by date, or marker
+		combinations of the above
+		generates permalink
+	*/
+	module("live filtering", {
+		setup: function() {}
+	});
+	
+	test("given an empty string, it should show all the periods", function() {
+		filterPeriods("#attnlist","");
+		var $periods = $('#attnlist .attnevent li'),
+			actual = $periods.filter(':visible').length,
+			expected = $periods.length;
+		equals(actual, expected);
+	});
+
+	test("given a plain word, it should hide all periods that don't have projects that the word matches any part of", function() {
+		var $periods = $('#attnlist .attnevent li'),
+			actual,
+			expected;
+		filterPeriods("#attnlist","o");
+		actual = $periods.filter(":visible").length;
+		expected = 4;
+		equals(actual, expected);
+		filterPeriods("#attnlist","yo");
+		actual = $periods.filter(":visible").length;
+		expected = 2;
+		equals(actual, expected);
+		filterPeriods("#attnlist","vo");
+		actual = $periods.filter(":visible").length;
+		expected = 1;
+		equals(actual, expected);
+		filterPeriods("#attnlist","blah");
+		actual = $periods.filter(":visible").length;
+		expected = 0;
+		equals(actual, expected);
+		filterPeriods("#attnlist","");
+		actual = $periods.filter(":visible").length;
+		expected = 6;
+		equals(actual, expected);
+	});
+	/*
+	test("given a string like 'notes:text', it should hide all periods that don't have notes fields that include 'text'", function() {
+		var actual,
+			expected;
+		actual = attn.filterPeriods("notes:note").length;
+		expected = 2;
+		equals(actual, expected);
+		actual = attn.filterPeriods("notes:second").length;
+		expected = 1;
+		equals(actual, expected);
+		actual = attn.filterPeriods("notes:blah").length;
+		expected = 0;
+		equals(actual, expected);
+		actual = attn.filterPeriods('notes:').length;
+		expected = 3;
+		equals(actual, expected);
+	});
+	
+	test("given a string like 'notes:\"text here\"', it should hide all periods that don't have notes fields that include 'text here'", function() {
+		var actual,
+			expected;
+		actual = attn.filterPeriods('notes:"a note"').length;
+		expected = 2;
+		equals(actual, expected);
+		actual = attn.filterPeriods('notes:"second note"').length;
+		expected = 1;
+		equals(actual, expected);
+		actual = attn.filterPeriods('notes:"blah note"').length;
+		expected = 0;
+		equals(actual, expected);
+		actual = attn.filterPeriods('notes:""').length;
+		expected = 3;
+		equals(actual, expected);
+	});
+	
+	test("given a string like to:'July 20th', it should hide the periods that don't start pre-July 21st", function() {
+		var actual,
+			expected;
+		actual = attn.filterPeriods('to:"July 22nd"').length;
+		expected = 5;
+		equals(actual, expected);
+		actual = attn.filterPeriods('to:"July 20th"').length;
+		expected = 2;
+		equals(actual, expected);
+		actual = attn.filterPeriods('to:"July 18th"').length;
+		expected = 0;
+		equals(actual, expected);
+		actual = attn.filterPeriods('to:""').length;
+		expected = 6;
+		equals(actual, expected);
+		actual = attn.filterPeriods('to:').length;
+		expected = 6;
+		equals(actual, expected);
+	});
+
+	test("given a string like from:'July 20th', it should hide the periods that don't start after July 19th", function() {
+		var actual,
+			expected;
+		actual = attn.filterPeriods('from:"July 22nd"').length;
+		expected = 0;
+		equals(actual, expected);
+		actual = attn.filterPeriods('from:"July 20th"').length;
+		expected = 4;
+		equals(actual, expected);
+		actual = attn.filterPeriods('from:"July 18th"').length;
+		expected = 6;
+		equals(actual, expected);
+		actual = attn.filterPeriods('from:""').length;
+		expected = 6;
+		equals(actual, expected);
+		actual = attn.filterPeriods('from:').length;
+		expected = 6;
+		equals(actual, expected);
+	});
+	
+	test("given combinations of the filters, it should hide the periods that don't match all the filters", function() {
+		var actual,
+			expected;
+		actual = attn.filterPeriods('o from:"July 20th"').length;
+		expected = 4;
+		equals(actual, expected);
+		actual = attn.filterPeriods('to:"July 20th" from:"July 20th"').length;
+		expected = 1;
+		equals(actual, expected);
+		actual = attn.filterPeriods('yo notes:note').length;
+		expected = 1;
+		equals(actual, expected);
+		actual = attn.filterPeriods('yo from:"July 20th" to:"July 22nd"').length;
+		expected = 1;
+		equals(actual, expected);
+	});
+	
+	test("it should hide any days that have no periods", function() {
+		
+	});
+	
+	test("it should show any days that have periods", function() {
+		
+	});
+	*/
 });

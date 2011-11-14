@@ -66,6 +66,36 @@ $(document).bind("AttnEventSaveError", function(e, attnEvent) {
 	updateInfo("oh oh! error saving");
 });
 
+function filterPeriods(periodsList,filterString) {
+	var $periodsList = $(periodsList),
+		$periods = $periodsList.find('ul.attnevent').children('li').show(),
+		selector;
+	if(!$periods) {
+		return;
+	}
+	if (!filterString) {
+		return;
+	}
+	
+	if (filterString.indexOf("notes:")===0) {
+		selector = "div.notes";
+		filterString = filterString.substring(6);
+		if (filterString.indexOf('"')===0 && filterString.lastIndexOf('"')===filterString.length-1) {
+			filterString = filterString.substring(1, filterString.length-1);	
+		}
+	} else {
+		selector = "div.project p";
+	}
+	
+	$.each( $periods, function(i, period) {
+		var $period = $(period),
+			$toTest = $period.find(selector);
+		if (!$toTest.length || $toTest.text().indexOf(filterString)===-1) {
+			$period.hide();
+		}
+	});
+}
+
 function updateAnalysis(events) {
 	var i,
 		attnday_templ = tmpl("attnday_templ"),
