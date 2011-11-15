@@ -104,6 +104,7 @@ a.button {
 	float: none;
 	display: inline-block;
 	border-bottom: 1px solid #ccc;
+	line-height: 14px;
 }
 
 a.button:hover {
