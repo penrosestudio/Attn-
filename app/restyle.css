@@ -347,7 +347,7 @@ input#save:hover {
 	opacity: 1;
 }
 
-a.edit {
+ul#attnlist ul li a.edit {
 	background-position: 0px -5px;
 	position: absolute;
 	right: -40px;
@@ -357,6 +357,7 @@ a.edit {
 	top: 50%;
 	margin-top: -15px;
 	opacity: 0;
+	display: block;
 }
 
 #attnlist ul li.editing:hover {
@@ -389,35 +390,62 @@ a.edit {
 #attnlist ul li.editing input.project {
 	margin-right: 10px;
 	width: 130px;
+	display: block;
 }
 
 #attnlist ul li.editing input.duration {
 	width: 70px;
 	margin-right: 10px;
+	display: block;
 }
 
 #attnlist ul li.editing textarea.notes {
 	resize: none;
 	padding: 10px;
 	height: 140px;
+	display: block;
 }
 
-li.editing .delete {
+#attnlist ul li input.project {
+	display: none;
+}
+
+#attnlist ul li input.duration {
+	display: none;
+}
+
+#attnlist ul li textarea.notes {
+	display: none;
+}
+
+#attnlist ul li a.sprite {
+	display: none;
+}
+
+#attnlist ul li.editing a.sprite {
+	display: none;
+}
+
+
+#attnlist ul li.editing a.delete {
 	position: absolute;
 	bottom: 70px;
 	right: -30px;
 	background-position: -10px -40px;
+	display: block;
 }
 
-li.editing .cancel {
+#attnlist ul li.editing a.cancel {
 	position: absolute;
 	bottom: 40px;
 	right: -30px;
 	background-position: -10px -70px;
+	display: block;
 }
 
-li.editing .save {
+#attnlist ul li.editing a.save {
 	position: absolute;
 	bottom: 10px;
 	right: -30px;
+	display: block;
 }

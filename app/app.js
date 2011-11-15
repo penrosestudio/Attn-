@@ -96,25 +96,41 @@ function filterPeriods(periodsList,filterString) {
 	});
 }
 
+
+
 $('#filterButton').click(function(e) {
 	e.preventDefault();
 	filterPeriods('#attnlist', $('#filterString').val());
 });
 
-function totalDuration(periodsList) {
+
+// JB - these click functions don't have tests because they're purely beta, we should animate this just slightly better
+
+$('a.edit').click(function(e) {
+	e.preventDefault();
+	$(this).parent().addClass('editing');
+});
+
+$('a.cancel').click(function(e) {
+	e.preventDefault();
+	$(this).parent().removeClass('editing');
+});
+
+/*function totalDuration(periodsList) {
 	// count visible periods
 	// add periods
 	var seconds = 0,
 		$periodsList = $(periodsList),
 		$periods = $periodsList.find('ul').children('li:visible');
 	$periods.each(function(i, period) {
-		$(period).
-	});
-	
-	
-	
+		//$(period).
+		})
+	}
+		
 	return seconds;
 }
+
+*/
 
 function updateAnalysis(events) {
 	var i,
