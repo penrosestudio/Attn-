@@ -1,0 +1,271 @@
+
+/* Generic */
+
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans;
+	background-color: #f2f2f2;
+	color: #7a7a7a;
+}
+
+input {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans;
+}
+
+#header {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 400px;
+	height: 20px;
+	z-index: 2;
+	text-align: right;
+	padding-right: 20px;
+}
+
+#wrapper {
+	width: 400%;
+	height: 100%;
+	position: relative;
+	left: 0;
+	background: url("ajax-loader.gif") no-repeat scroll 12.5% center transparent;
+}
+
+.screen {
+	width: 25%;
+	height: 100%;
+	float: left;
+	position: relative;
+}
+
+.js .screen {
+	display: none;
+}
+
+button {
+	border: none;
+	position: fixed;
+    width: 42px;
+    height: 70px;
+    top: 150px;
+    font-size: 0px;
+    opacity: 0.5;
+    background-repeat: no-repeat;
+	background-position: center center;
+	-webkit-transition: 0.4s ease-out;
+	-moz-transition: 0.4s ease-out;
+	-o-transition: 0.4s ease-out;
+	transition: 0.4s ease-out;
+	z-index: 3;
+	background-color: transparent;
+}
+
+button:hover {
+	opacity:0.7;
+	cursor: pointer;
+}
+
+button.right {
+	right: 30px;
+	background-image: url(arrow-right.png);
+}
+
+button.left {
+	left: 30px;
+	background-image: url(arrow-left.png);
+}
+
+
+a.button {
+	font-family: "Helvetica Neue", helvetica, arial;
+	background-color: #e6e6e6;
+	border: none;
+	font-size: 12px;
+	text-decoration: none;
+	font-weight: bold;
+	padding: 3px 5px;
+	color: #7a7a7a;
+	-moz-border-radius: 3px; 
+  	-webkit-border-radius: 3px; 
+    border-radius: 3px;       
+  	-moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box; 
+  	letter-spacing: 0.05em;
+  	cursor:pointer;
+  	
+  	-moz-box-shadow:inset 0 0 5px #ccc;
+   	-webkit-box-shadow:inset 0 0 5px #ccc;
+	box-shadow:inset 0 0 5px #ccc;
+  	     
+     -webkit-transition: 0.4s ease-out;
+	-moz-transition: 0.4s ease-out;
+	-o-transition: 0.4s ease-out;
+	transition: 0.4s ease-out;
+	
+	margin: 10px 5px 0px;
+	float: none;
+	display: inline-block;
+	border-bottom: 1px solid #ccc;
+}
+
+a.button:hover {
+	-moz-box-shadow:inset 0 0 5px #bbb;
+   	-webkit-box-shadow:inset 0 0 5px #bbb;
+	box-shadow:inset 0 0 5px #bbb;
+	background-color: #ddd;
+	color: #666;
+}
+
+/* Log in */
+
+
+#analysis, #intro, #teamanalysis {
+	overflow-y: scroll;
+}
+
+#loginForm {
+	width: 370px;
+	margin: auto;
+	background-color: #f2f2f2;
+	overflow: hidden;
+}
+
+#loginForm h1 {
+	font-weight: bold;
+	font-size: 62px;
+	line-height: 62px;
+	letter-spacing: -0.02em;
+	border-bottom: 1px #cacaca solid;
+	padding-bottom: 5px;
+	margin: 100px 0px 20px;
+}
+
+#loginForm div {
+	width: 230px;
+	padding-left: 140px;
+	font-size: 14px;
+	color: #aeaeae;
+	font-weight: bold;
+	border-bottom: 1px #cacaca solid;
+	margin-bottom: 10px;
+}
+
+#loginForm input {
+	width: 230px;
+	height: 30px;
+	padding: 5px;
+	margin: 10px 0px 20px;
+	border: none;
+	background-color: white;
+}
+
+#loginForm input[type=submit] {
+	width: 80px;
+	height: 30px;
+	-moz-border-radius: 3px; 
+  	-webkit-border-radius: 3px; 
+    border-radius: 3px;     
+    color: white;
+    font-family: "Helvetica Neue", Helvetica, Arial;
+    cursor: pointer;
+    background-color: #91b7c8;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 14px;
+    padding: 4px 0 7px;
+    margin-top: 0px;
+}
+
+#loginForm input[type=submit]:hover {
+	background-color: #497f97;
+}
+
+
+#loginForm p {
+	font-size: 14px;
+	line-height: 18px;
+	
+}
+
+/* Attn Input */
+
+#input .container {
+	width: 370px;
+	margin: 100px auto;
+}
+
+#input #attn {
+	border: none;
+	background-color: white;
+	width: 100%;
+	height: 60px;
+	margin-bottom: 10px;
+	font-size: 30px;
+	padding: 10px;
+}
+
+
+/* Analysis Screen */
+
+#attnlist {
+	width: 600px;
+	margin: auto;
+	margin-top: 120px;
+	font-size: 12px;
+}
+
+#attnlist li {
+	border-top: 1px dotted #7a7a7a;
+	overflow: hidden;
+}
+
+#attnlist ul li {
+	width: 520px;
+	float: right;
+    overflow: hidden;
+    width: 520px;
+    padding: 10px 0px;
+}
+
+#attnlist ul li:first-child {
+	border-top: none;
+}
+
+.date {
+	float: left;
+	width: 80px;
+	padding-top: 10px;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.project, .duration, .notes {
+	display: block;
+	float: left;
+}
+
+.project {
+	width: 150px;
+	font-weight: bold;
+	font-size: 13px;
+	padding-top: 2px;
+}
+
+.duration {
+	width: 70px;
+	font-weight: bold;
+	font-size: 17px;
+}
+
+.notes {
+	width: 300px;
+	padding-top: 3px;
+}
+
+
+
+
+
+
+
+
+
+

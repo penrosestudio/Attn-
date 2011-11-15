@@ -1,0 +1,107 @@
+
+<html>
+<head>
+	<title>Attn!</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="reset.css" />
+	<link rel="stylesheet" type="text/css" href="jbase.css" />
+	<link rel="stylesheet" type="text/css" href="grid.css" />
+	<link rel="stylesheet" type="text/css" href="stickyfooter.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="restyle.css" />
+</head>
+<body>
+	<div id="header">
+		<a href="#" id="accountID" class="button">Not logged in</a>
+		<a href="#" class="button">Contact</a>
+	</div>
+	<div id="wrapper">
+		<div id="login" class="screen">
+			<form id="loginForm">
+				<h1>attn!</h1>
+				<div class="right">
+					<label for="loginID">Email</label>
+					<input id="loginID" name="loginID" type="text" />
+					<label for="password">Password</label>
+					<input id="password" name="password" type="password" />
+					<input class="right" type="submit" name="submitButton" value="Log in" />
+				</div>
+				<p>There was a problem with logging in, please try again</p>
+			</form>
+			
+		</div>
+		<div id="input" class="screen">
+			<div class="container">
+				<input placeholder="Type..." id="attn"/>
+				<ul>
+					<li class="selected" id="actionText">helper text</li>
+				</ul>
+				<span id="infoText">not activated - please login</span>
+				<textarea id="notes"></textarea>
+			</div>
+			<button class="left">left</button>
+			<button class="right">right</button>
+		</div>
+		<div id="analysis" class="screen">
+			<div class="jbasewrap strip">
+				<ul id="attnlist">
+					<li><span class="date">11.12.11</span>
+						<ul>
+							<li>
+								<span class="project">Sweetspot</span>
+								<span class="duration">1:45</span>
+								<span class="notes">call with Jon discussing the php of the new page ting.</span>
+							</li>
+							<li>
+								<span class="project">Sweetspot</span>
+								<span class="duration">1:45</span>
+								<span class="notes">call with Jon discussing the php of the new page ting.</span>
+							</li>
+						</ul>
+					</li>
+					<li><span class="date">11.12.11</span>
+						<ul>
+							<li>
+								<span class="project">Sweetspot</span>
+								<span class="duration">1:45</span>
+								<span class="notes">call with Jon discussing the php of the new page ting.</span>
+							</li>
+							<li>
+								<span class="project">Sweetspot</span>
+								<span class="duration">1:45</span>
+								<span class="notes">call with Jon discussing the php of the new page ting.</span>
+							</li>
+						</ul>
+					</li>
+					<li><span class="date">11.12.11</span>
+						<ul>
+							<li>
+								<span class="project">Sweetspot</span>
+								<span class="duration">1:45</span>
+								<span class="notes">call with Jon discussing the php of the new page ting.</span>
+							</li>
+							<li>
+								<span class="project">Sweetspot</span>
+								<span class="duration">1:45</span>
+								<span class="notes">call with Jon discussing the php of the new page ting.</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="teamanalysis" class="screen">
+			<div class="jbasewrap strip">
+				<h2>Team Analysis</h2>
+			</div>
+		</div>
+	</div><!-- end #wrapper -->
+	<script type="text/javascript" src="jquery-1.6.2.js"></script>
+	<script type="text/javascript" src="date.js"></script>
+	<script type="text/javascript" src="chrjs.js"></script>
+	<script type="text/javascript" src="jquery-json.min.js"></script>
+	<script type="text/javascript" src="iframe-comms.js"></script>
+	<script type="text/javascript" src="templ.js"></script>
+	<script type="text/javascript" src="attn.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+</body>
+</html>
