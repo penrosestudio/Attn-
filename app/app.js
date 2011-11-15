@@ -68,7 +68,7 @@ $(document).bind("AttnEventSaveError", function(e, attnEvent) {
 
 function filterPeriods(periodsList,filterString) {
 	var $periodsList = $(periodsList),
-		$periods = $periodsList.find('ul.attnevent').children('li').show(),
+		$periods = $periodsList.find('ul').children('li').show(),
 		selector;
 	if(!$periods) {
 		return;
@@ -76,24 +76,44 @@ function filterPeriods(periodsList,filterString) {
 	if (!filterString) {
 		return;
 	}
-	
+	filterString = filterString.toLowerCase();
 	if (filterString.indexOf("notes:")===0) {
-		selector = "div.notes";
+		selector = ".notes";
 		filterString = filterString.substring(6);
 		if (filterString.indexOf('"')===0 && filterString.lastIndexOf('"')===filterString.length-1) {
 			filterString = filterString.substring(1, filterString.length-1);	
 		}
 	} else {
-		selector = "div.project p";
+		selector = ".project";
 	}
 	
 	$.each( $periods, function(i, period) {
 		var $period = $(period),
 			$toTest = $period.find(selector);
-		if (!$toTest.length || $toTest.text().indexOf(filterString)===-1) {
+		if (!$toTest.length || $toTest.text().toLowerCase().indexOf(filterString)===-1) {
 			$period.hide();
 		}
 	});
+}
+
+$('#filterButton').click(function(e) {
+	e.preventDefault();
+	filterPeriods('#attnlist', $('#filterString').val());
+});
+
+function totalDuration(periodsList) {
+	// count visible periods
+	// add periods
+	var seconds = 0,
+		$periodsList = $(periodsList),
+		$periods = $periodsList.find('ul').children('li:visible');
+	$periods.each(function(i, period) {
+		$(period).
+	});
+	
+	
+	
+	return seconds;
 }
 
 function updateAnalysis(events) {

@@ -209,6 +209,16 @@ $(document).ready(function() {
 		expected = 6;
 		equals(actual, expected);
 	});
+	
+	test("it shouldn't be case-sensitive", function() {
+		var $periods = $('#attnlist .attnevent li'),
+			actual,
+			expected;
+		filterPeriods("#attnlist","O");
+		actual = $periods.filter(":visible").length;
+		expected = 4;
+		equals(actual, expected);
+	});
 	/*
 	test("given a string like 'notes:text', it should hide all periods that don't have notes fields that include 'text'", function() {
 		var actual,
@@ -309,4 +319,16 @@ $(document).ready(function() {
 		
 	});
 	*/
+	
+	module("live stats", {
+		setup: function() {}
+	});
+	
+	test("it should display the total duration of all visible periods", function() {
+		var duration = totalDuration("#attnlist");
+			expected = 166937; // 46h 22m 17s!
+		equals(duration, expected);
+	});
+
+	
 });

@@ -5,11 +5,33 @@ body {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans;
 	background-color: #f2f2f2;
 	color: #7a7a7a;
+	width: 100%;
+	overflow: hidden;
 }
+
+
 
 input {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans;
 }
+
+.sprite {
+	background-image: url(sprite.png);
+	background-position: -10px -100px;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	height: 20px;
+	width: 20px;
+	text-indent: -999px;
+	overflow: hidden;
+	display: block;
+    border: none;
+}
+
+.sprite:hover {
+	opacity: 0.7;
+}
+
 
 #header {
 	position: fixed;
@@ -191,6 +213,7 @@ a.button:hover {
 #input .container {
 	width: 370px;
 	margin: 100px auto;
+	position: relative;
 }
 
 #input #attn {
@@ -203,6 +226,61 @@ a.button:hover {
 	padding: 10px;
 }
 
+#input ul { /* this is the ul for #actionText */
+	list-style: none;
+	margin: 10px 0;
+	font-size: 16px;
+}
+
+#input ul li {
+	list-style: none;
+	letter-spacing: 0.02em;
+	padding: 2px 10px;	
+	-moz-border-radius: 4px; 
+	-webkit-border-radius: 4px; 
+	border-radius: 4px; 
+	display: inline;
+}
+
+#input ul li.selected {
+	background-color: #91b7c8;
+	color: #f2f2f2;
+}
+
+#input ul li.selected:hover {
+	background-color: #497f97;
+}
+
+#input ul li.selected:empty {
+	padding: 0;
+}
+
+textarea#notes2 {
+	width: 100%;
+	resize: none;
+	margin-top: 20px;
+	height: 120px;
+	border: none;
+	font-family: Helvetica;
+	color: #555;
+	padding: 10px;
+}
+
+img#sync {
+	position: absolute;
+	right: -30px;
+	top: 20px;
+}
+
+input#save {
+    position: absolute;
+    right: -30px;
+    bottom: 0px;
+}
+
+input#save:hover {
+	opacity: 0.7;
+}
 
 /* Analysis Screen */
 
@@ -215,15 +293,15 @@ a.button:hover {
 
 #attnlist li {
 	border-top: 1px dotted #7a7a7a;
-	overflow: hidden;
+	clear: right;
+	list-style: none;
 }
 
 #attnlist ul li {
-	width: 520px;
+	width: 514px;
 	float: right;
-    overflow: hidden;
-    width: 520px;
-    padding: 10px 0px;
+    padding: 10px 3px;
+    position: relative;
 }
 
 #attnlist ul li:first-child {
@@ -257,16 +335,89 @@ a.button:hover {
 }
 
 .notes {
-	width: 300px;
+	width: 294px;
 	padding-top: 3px;
 }
 
+#attnlist ul li:hover {
+	 background-color: #fafafa;
+}
 
+#attnlist ul li:hover a.edit, a.edit:hover {
+	opacity: 1;
+}
 
+a.edit {
+	background-position: 0px -5px;
+	position: absolute;
+	right: -40px;
+	padding-left: 10px;
+	width:30px;
+	height: 30px;
+	top: 50%;
+	margin-top: -15px;
+	opacity: 0;
+}
 
+#attnlist ul li.editing:hover {
+	background: #f2f2f2;
+}
 
+#attnlist ul li.editing:hover a.edit, #attnlist ul li.editing a.edit:hover {
+	opacity: 0;
+}
 
+#attnlist ul li.editing span {
+	display: none;
+}
 
+#attnlist ul li.editing {
+	padding: 10px 0px;
+}
 
+#attnlist ul li.editing input, #attnlist ul li.editing textarea {
+	 background: white;
+	/* border: #ccc 1px solid; */
+	 border: none;
+	 font-family: Helvetica, Arial;
+	 color: #555;
+	 font-size: 13px;
+	 height: 30px;
+	 padding: 5px 10px;
+}
 
+#attnlist ul li.editing input.project {
+	margin-right: 10px;
+	width: 130px;
+}
 
+#attnlist ul li.editing input.duration {
+	width: 70px;
+	margin-right: 10px;
+}
+
+#attnlist ul li.editing textarea.notes {
+	resize: none;
+	padding: 10px;
+	height: 140px;
+}
+
+li.editing .delete {
+	position: absolute;
+	bottom: 70px;
+	right: -30px;
+	background-position: -10px -40px;
+}
+
+li.editing .cancel {
+	position: absolute;
+	bottom: 40px;
+	right: -30px;
+	background-position: -10px -70px;
+}
+
+li.editing .save {
+	position: absolute;
+	bottom: 10px;
+	right: -30px;
+}
