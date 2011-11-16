@@ -151,7 +151,7 @@ a.button:hover {
 	overflow: hidden;
 }
 
-#loginForm h1 {
+#loginForm h1, h2#totalSeconds {
 	font-weight: bold;
 	font-size: 62px;
 	line-height: 62px;
@@ -291,13 +291,18 @@ input#save:hover {
 	
 }
 
+h2#totalSeconds {
+	margin: 40px 0px 0px;
+	border-bottom: none;
+}
+
 #attnlist {
 	margin: 40px 0px 0px;
 	font-size: 12px;
 }
 
 #attnlist li {
-	border-top: 1px dotted #7a7a7a;
+	border-top: 1px dotted #dedede;
 	clear: right;
 	list-style: none;
 }
@@ -330,7 +335,7 @@ input#save:hover {
 	width: 150px;
 	font-weight: bold;
 	font-size: 13px;
-	padding-top: 2px;
+	padding-top: 1px;
 }
 
 .duration {
@@ -341,7 +346,7 @@ input#save:hover {
 
 .notes {
 	width: 294px;
-	padding-top: 3px;
+	padding-top: 1px;
 }
 
 #attnlist ul li:hover {
