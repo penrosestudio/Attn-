@@ -284,10 +284,15 @@ input#save:hover {
 
 /* Analysis Screen */
 
-#attnlist {
+#analysis .container {
 	width: 600px;
 	margin: auto;
-	margin-top: 120px;
+	padding: 20px 0px;
+	
+}
+
+#attnlist {
+	margin: 40px 0px 0px;
 	font-size: 12px;
 }
 
@@ -376,7 +381,7 @@ ul#attnlist ul li a.edit {
 	padding: 10px 0px;
 }
 
-#attnlist ul li.editing input, #attnlist ul li.editing textarea {
+#attnlist ul li.editing input, #attnlist ul li.editing textarea, #analysis input {
 	 background: white;
 	/* border: #ccc 1px solid; */
 	 border: none;

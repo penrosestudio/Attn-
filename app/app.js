@@ -98,8 +98,7 @@ function filterPeriods(periodsList,filterString) {
 
 
 
-$('#filterButton').click(function(e) {
-	e.preventDefault();
+$('#filterString').keypress(function() {
 	filterPeriods('#attnlist', $('#filterString').val());
 });
 
