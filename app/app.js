@@ -96,12 +96,25 @@ function filterPeriods(periodsList,filterString) {
 	});
 }
 
+function updateTotalDuration() {
+	var duration = attn.formatDuration(totalDuration('#attnlist')*1000),
+		durationArray = [];
+	durationArray.push(duration.hours || "0");
+	durationArray.push(duration.minutes || "00");
+	$('#totalSeconds span').html(durationArray.join(':'));
+}
 
-
-$('#filterString').keypress(function() {
+$('#filterString').keyup(function() {
 	filterPeriods('#attnlist', $('#filterString').val());
+	updateTotalDuration();
 });
 
+function clearFilterString() {
+	var e = $.Event("keyup");
+	e.keyCode = 13;
+	$('#filterString').val("")
+		.trigger(e);
+}
 
 // JB - these click functions don't have tests because they're purely beta, we should animate this just slightly better
 
@@ -115,21 +128,19 @@ $('a.cancel').click(function(e) {
 	$(this).parent().removeClass('editing');
 });
 
-/*function totalDuration(periodsList) {
-	// count visible periods
-	// add periods
+function totalDuration(periodsList) {
+
 	var seconds = 0,
 		$periodsList = $(periodsList),
 		$periods = $periodsList.find('ul').children('li:visible');
 	$periods.each(function(i, period) {
-		//$(period).
-		})
-	}
-		
+		addSeconds = $(period).find('.duration').data('duration');
+		seconds += addSeconds;
+	});
 	return seconds;
 }
 
-*/
+
 
 function updateAnalysis(events) {
 	var i,
@@ -164,11 +175,13 @@ function updateAnalysis(events) {
 		html = "<li>you don't have any events</li>";
 	}
 	$('#attnlist').html(html);
+	clearFilterString();
 }
 
 function init() {
 	attn.getEvents(function(tiddlers) {
 		updateAnalysis(tiddlers);
+		
 	}, host);
 	$('#attn').attn().keyup();
 }
