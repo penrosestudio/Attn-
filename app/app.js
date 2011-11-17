@@ -103,7 +103,6 @@ function filterPeriods(periodsList,filterString) {
 		if (!$day.find('ul').children('li:visible').length) {
 			$day.hide();
 		}
-		
 	});
 }
 
