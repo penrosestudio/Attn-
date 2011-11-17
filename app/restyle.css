@@ -173,7 +173,7 @@ a.button:hover {
 
 #loginForm input {
 	width: 230px;
-	height: 30px;
+	height: 20px;
 	padding: 5px;
 	margin: 10px 0px 20px;
 	border: none;
@@ -219,8 +219,8 @@ a.button:hover {
 #input #attn {
 	border: none;
 	background-color: white;
-	width: 100%;
-	height: 60px;
+	width: 350px;
+	height: 40px;
 	margin-bottom: 10px;
 	font-size: 30px;
 	padding: 10px;
@@ -256,10 +256,10 @@ a.button:hover {
 }
 
 textarea#notes2 {
-	width: 100%;
+	width: 350px;
 	resize: none;
 	margin-top: 20px;
-	height: 120px;
+	height: 100px;
 	border: none;
 	font-family: Helvetica;
 	color: #555;
@@ -345,7 +345,7 @@ h2#totalSeconds {
 }
 
 .notes {
-	width: 294px;
+	width: 274px;
 	padding-top: 1px;
 }
 
@@ -393,18 +393,18 @@ ul#attnlist ul li a.edit {
 	 font-family: Helvetica, Arial;
 	 color: #555;
 	 font-size: 13px;
-	 height: 30px;
+	 height: 20px;
 	 padding: 5px 10px;
 }
 
 #attnlist ul li.editing input.project {
 	margin-right: 10px;
-	width: 130px;
+	width: 110px;
 	display: block;
 }
 
 #attnlist ul li.editing input.duration {
-	width: 70px;
+	width: 50px;
 	margin-right: 10px;
 	display: block;
 }
@@ -412,7 +412,7 @@ ul#attnlist ul li a.edit {
 #attnlist ul li.editing textarea.notes {
 	resize: none;
 	padding: 10px;
-	height: 140px;
+	height: 120px;
 	display: block;
 }
 
