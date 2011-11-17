@@ -19,6 +19,7 @@ input {
 	background-image: url(sprite.png);
 	background-position: -10px -100px;
 	background-repeat: no-repeat;
+	background-color: transparent;
 	cursor: pointer;
 	height: 20px;
 	width: 20px;

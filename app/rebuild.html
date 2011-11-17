@@ -31,7 +31,7 @@
 			</div>
 			<div id="input" class="screen">
 				<div class="container">
-					<input placeholder="Type..." id="attn"/>
+					<input placeholder="Type&hellip;" id="attn"/>
 					<ul>
 						<li class="selected" id="actionText">helper text</li>
 					</ul>
@@ -48,7 +48,7 @@
 					<input type="text" id="filterString" placeholder="type to filter&hellip;" />
 					<h2 id="totalSeconds">total attn! <span>0</span></h2>
 					<ul id="attnlist">
-						<li>Analysis here after loading...</li>
+						<li>Analysis here after loading&hellip;</li>
 					</ul>
 				</div>
 			</div>
@@ -65,7 +65,7 @@
 					<% for(var i=periods.length-1; i>=0; i--) { %>					
 					<li>
 						<span class="project"><%=periods[i].project%></span>
-						<span class="duration" data-duration="6300" title="November 11th 2011 <%=periods[i].starttime%> <% if(periods[i].end) {%>- <%=periods[i].endtime%><% } else {%>(open)<%}%>"><%=periods[i].durationString%></span>
+						<span class="duration" data-duration="<%=(periods[i].duration / 1000) || 0%>" title="<%=date%> <%=periods[i].starttime%> <% if(periods[i].end) {%>- <%=periods[i].endtime%><% } else {%>(open)<%}%>"><% if(periods[i].end) {%><%=periods[i].durationString%><% } else {%>(open)<%}%></span>
 						<span class="notes"><%=periods[i].notes%></span>
 						<a href="#" title="Edit" class="sprite edit">Edit</a>
 						

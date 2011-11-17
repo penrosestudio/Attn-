@@ -105,8 +105,10 @@ function updateTotalDuration() {
 }
 
 $('#filterString').keyup(function() {
-	filterPeriods('#attnlist', $('#filterString').val());
-	updateTotalDuration();
+	window.setTimeout(function() {
+		filterPeriods('#attnlist', $('#filterString').val());
+		updateTotalDuration();
+	}, 500);
 });
 
 function clearFilterString() {
@@ -117,17 +119,6 @@ function clearFilterString() {
 }
 
 // JB - these click functions don't have tests because they're purely beta, we should animate this just slightly better
-
-$('a.edit').click(function(e) {
-	e.preventDefault();
-	$(this).parent().addClass('editing');
-});
-
-$('a.cancel').click(function(e) {
-	e.preventDefault();
-	$(this).parent().removeClass('editing');
-});
-
 function totalDuration(periodsList) {
 
 	var seconds = 0,
@@ -157,15 +148,22 @@ function updateAnalysis(events) {
 				this.endtime = this.endDate.toString("h:mmtt").toLowerCase();
 			}
 			if(hours) {
-				durBits.push(hours===1 ? hours+'h' : hours+'h');
+				durBits.push(hours);
+			} else {
+				durBits.push("0");
 			}
 			if(minutes) {
-				durBits.push(minutes===1 ? minutes+'m' : minutes+'m');
+				if(seconds && seconds>30) {
+					minutes += 1;
+				}
+				durBits.push(minutes);
+			} else {
+				durBits.push("00");
 			}
-			if(seconds) {
-				durBits.push(seconds+"s");
-			}
-			this.durationString = durBits.join(" ");
+			/*if(seconds) {
+				durBits.push(seconds);
+			}*/
+			this.durationString = durBits.join(":");
 		}),
 		days = attn.daysFromPeriods(periods,"dd.MM.yyyy");
 	for(i=days.length-1;i>=0;i--) {
@@ -265,6 +263,16 @@ $(document).ready(function() {
 		if(this.note!==this.prevNote) {
 			attn.saveNotes(this, host);
 		}
+	});
+	
+	$('a.edit').live("click", function(e) {
+		e.preventDefault();
+		$(this).parent().addClass('editing');
+	});
+	
+	$('a.cancel').live("click", function(e) {
+		e.preventDefault();
+		$(this).parent().removeClass('editing');
 	});
 	
 	/* this is only needed with iframe-comms.js, not iframe-comms2.js
