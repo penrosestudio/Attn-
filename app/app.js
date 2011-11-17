@@ -94,6 +94,17 @@ function filterPeriods(periodsList,filterString) {
 			$period.hide();
 		}
 	});
+	// find all days in attnlist
+	// if there is no visible child inside any day (ie. direct child) of the attnlist ul
+	// hide it
+	
+	$periodsList.children().each(function(i, day) {
+		var $day = $(day);
+		if (!$day.find('ul').children('li:visible').length) {
+			$day.hide();
+		}
+		
+	});
 }
 
 function updateTotalDuration() {

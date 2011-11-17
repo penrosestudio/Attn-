@@ -319,6 +319,13 @@ $(document).ready(function() {
 		
 	});
 	*/
+	test("if a day has no visible periods, it should hide that day", function() {
+		filterPeriods("#attnlist","bpsf");
+		var $days = $("#attnlist h3");
+			actual = $days.filter(':visible').length,
+			expected = 1;
+		equals(actual, expected);
+	});
 	
 	module("live stats", {
 		setup: function() {}
