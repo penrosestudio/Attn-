@@ -1,160 +1,92 @@
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
-<head>
-	<title>Attn!</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" type="text/css" href="reset.css" />
-	<link rel="stylesheet" type="text/css" href="jbase.css" />
-	<link rel="stylesheet" type="text/css" href="grid.css" />
-	<link rel="stylesheet" type="text/css" href="stickyfooter.css" />
-	<link rel="stylesheet" type="text/css" media="all" href="restyle.css" />
-</head>
-<body>
-	<div id="header">
-		<a href="#" id="accountID" class="button">Not logged in</a>
-		<a href="#" class="button">Contact</a>
-	</div>
-	<div id="wrapper">
-		<div id="login" class="screen">
-			<form id="loginForm">
-				<h1>attn!</h1>
-				<div class="right">
-					<label for="loginID">Email</label>
-					<input id="loginID" name="loginID" type="text" />
-					<label for="password">Password</label>
-					<input id="password" name="password" type="password" />
-					<input class="right" type="submit" name="submitButton" value="Log in" />
+	<head>
+		<title>Attn!</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="reset.css" />
+		<link rel="stylesheet" type="text/css" href="jbase.css" />
+		<link rel="stylesheet" type="text/css" href="grid.css" />
+		<link rel="stylesheet" type="text/css" href="stickyfooter.css" />
+		<link rel="stylesheet" type="text/css" media="all" href="restyle.css" />
+	</head>
+	<body>
+		<div id="header">
+			<a href="#" id="accountID" class="button">Not logged in</a>
+			<a href="http://attn.uservoice.com" class="button" target="_blank" title="Attn! feedback forum on UserVoice">Feedback</a>
+			<a href="/intro" class="button" title="What is this 'Attn!'?">?</a>
+		</div>
+		<div id="wrapper">
+			<div id="login" class="screen">
+				<form id="loginForm">
+					<h1>attn!</h1>
+					<div class="right">
+						<label for="loginID">Email</label>
+						<input id="loginID" name="loginID" type="text" />
+						<label for="password">Password</label>
+						<input id="password" name="password" type="password" />
+						<input class="right" type="submit" name="submitButton" value="Log in" />
+					</div>
+					<p>There was a problem with logging in, please try again</p>
+				</form>
+			</div>
+			<div id="input" class="screen">
+				<div class="container">
+					<input placeholder="Type..." id="attn"/>
+					<ul>
+						<li class="selected" id="actionText">helper text</li>
+					</ul>
+					<!-- <span id="infoText">not activated - please login</span>-->
+					<textarea id="notes2"></textarea>
+					<img id="sync" src="ajax-loader.gif"/>
+					<input id="save" class="sprite" type="button" value="Save" />
 				</div>
-				<p>There was a problem with logging in, please try again</p>
-			</form>
-			
-		</div>
-		<div id="input" class="screen">
-			<div class="container">
-				<input placeholder="Type..." id="attn"/>
+				<button class="left">left</button>
+				<button class="right">right</button>
+			</div>
+			<div id="analysis" class="screen">
+				<div class="jbasewrap container">
+					<input type="text" id="filterString" placeholder="type to filter&hellip;" />
+					<h2 id="totalSeconds">total attn! <span>0</span></h2>
+					<ul id="attnlist">
+						<li>Analysis here after loading...</li>
+					</ul>
+				</div>
+			</div>
+			<div id="teamanalysis" class="screen">
+				<div class="jbasewrap strip">
+					<h2>Team Analysis</h2>
+				</div>
+			</div>
+		</div><!-- end #wrapper -->
+		<script type="text/html" id="attnday_templ">
+			<li>
+				<span class="date"><%=date%></span>
 				<ul>
-					<li class="selected" id="actionText">helper text</li>
+					<% for(var i=periods.length-1; i>=0; i--) { %>					
+					<li>
+						<span class="project"><%=periods[i].project%></span>
+						<span class="duration" data-duration="6300" title="November 11th 2011 <%=periods[i].starttime%> <% if(periods[i].end) {%>- <%=periods[i].endtime%><% } else {%>(open)<%}%>"><%=periods[i].durationString%></span>
+						<span class="notes"><%=periods[i].notes%></span>
+						<a href="#" title="Edit" class="sprite edit">Edit</a>
+						
+						<input class="project" value="<%=periods[i].project%>" />
+						<input class="duration" value="<%=periods[i].durationString%>" />
+						<textarea class="notes"><%=periods[i].notes%></textarea>
+						<a href="#" title="Delete" class="sprite delete">Delete</a>
+						<a href="#" title="Cancel" class="sprite cancel">Cancel</a>
+						<a href="#" title="Save" class="sprite save">Save</a>
+					</li>
+					<% } %>
 				</ul>
-				<!-- <span id="infoText">not activated - please login</span>-->
-				<textarea id="notes2"></textarea>
-				<img id="sync" src="ajax-loader.gif"/>
-				<input id="save" class="sprite" type="button" value="Save" />
-			</div>
-			<button class="left">left</button>
-			<button class="right">right</button>
-		</div>
-		<div id="analysis" class="screen">
-			<div class="jbasewrap container">
-				<input type="text" id="filterString" placeholder="type to filter&hellip;" />
-				<!--<input type="submit" id="filterButton" value="Go!" />-->
-				<h2 id="totalSeconds">total attn! <span>0</span></h2>
-				<ul id="attnlist">
-					<li><span class="date">11.12.11</span>
-						<ul>
-							<li>
-								<span class="project">Sweetspot</span>
-								<span class="duration" data-duration="6300" title="November 11th 2011 13:10 - 14:55">1:45</span>
-								<span class="notes">call with Jon discussing the php of the new page ting.</span>
-								<a href="#" title="Edit" class="sprite edit">Edit</a>
-								
-								<input class="project" value="Sweetspot" />
-								<input class="duration" value="1:45" />
-								<textarea class="notes">call with Jon discussing the php of the new page ting.</textarea>
-								<a href="#" title="Delete" class="sprite delete">Delete</a>
-								<a href="#" title="Cancel" class="sprite cancel">Cancel</a>
-								<a href="#" title="Save" class="sprite save">Save</a>
-							</li>
-							<li>
-								<span class="project">evo</span>
-								<span class="duration" data-duration="6300" title="November 11th 2011 13:10 - 14:55">1:45</span>
-								<span class="notes">call with Jon discussing the php of the new page ting. Like twice call with Jon discussing the php of the new page ting.</span>
-								<a href="#" title="Edit" class="sprite edit">Edit</a>
-								
-								<input class="project" value="evo" />
-								<input class="duration" value="1:45" />
-								<textarea class="notes">call with Jon discussing the php of the new page ting. Like twice call with Jon discussing the php of the new page ting.</textarea>
-								<a href="#" title="Delete" class="sprite delete">Delete</a>
-								<a href="#" title="Cancel" class="sprite cancel">Cancel</a>
-								<a href="#" title="Save" class="sprite save">Save</a>
-							</li>
-						</ul>
-					</li>
-					<li><span class="date">11.12.11</span>
-						<ul>
-							<li class="">
-								<span class="project">Sweetspot</span>
-								<span class="duration" data-duration="6300" title="November 11th 2011 13:10 - 14:55">1:45</span>
-								<span class="notes">call with Jon twice discussing the php of the new page ting.</span>
-								<a href="#" title="Edit" class="sprite edit">Edit</a>
-
-								<input class="project" value="Sweetspot" />
-								<input class="duration" value="1:45" />
-								<textarea class="notes">call with Jon discussing the php of the new page ting.</textarea>
-								<a href="#" title="Delete" class="sprite delete">Delete</a>
-								<a href="#" title="Cancel" class="sprite cancel">Cancel</a>
-								<a href="#" title="Save" class="sprite save">Save</a>
-							</li>
-							<li>
-								<span class="project">Sweetspot</span>
-								<span class="duration" data-duration="6300" title="November 11th 2011 13:10 - 14:55">1:45</span>
-								<span class="notes">call with Jon discussing the php of the new page ting.</span>
-								<a href="#" title="Edit" class="sprite edit">Edit</a>
-								
-								<input class="project" value="Sweetspot" />
-								<input class="duration" value="1:45" />
-								<textarea class="notes">call with Jon discussing the php of the new page ting.</textarea>
-								<a href="#" title="Delete" class="sprite delete">Delete</a>
-								<a href="#" title="Cancel" class="sprite cancel">Cancel</a>
-								<a href="#" title="Save" class="sprite save">Save</a>
-							</li>
-						</ul>
-					</li>
-					<li><span class="date">11.12.11</span>
-						<ul>
-							<li>
-								<span class="project">Sweetspot</span>
-								<span class="duration" data-duration="6300" title="November 11th 2011 13:10 - 14:55">1:45</span>
-								<span class="notes">call with Jon discussing the php of the new page ting.</span>
-								<a href="#" title="Edit" class="sprite edit">Edit</a>
-								
-								<input class="project" value="Sweetspot" />
-								<input class="duration" value="1:45" />
-								<textarea class="notes">call with Jon discussing the php of the new page ting.</textarea>
-								<a href="#" title="Delete" class="sprite delete">Delete</a>
-								<a href="#" title="Cancel" class="sprite cancel">Cancel</a>
-								<a href="#" title="Save" class="sprite save">Save</a>
-							</li>
-							<li>
-								<span class="project">Sweetspot</span>
-								<span class="duration" data-duration="6300" title="November 11th 2011 13:10 - 14:55">1:45</span>
-								<span class="notes">call with Jon discussing the php of the new page ting.</span>
-								<a href="#" title="Edit" class="sprite edit">Edit</a>
-								
-								<input class="project" value="Sweetspot" />
-								<input class="duration" value="1:45" />
-								<textarea class="notes">call with Jon discussing the php of the new page ting.</textarea>
-								<a href="#" title="Delete" class="sprite delete">Delete</a>
-								<a href="#" title="Cancel" class="sprite cancel">Cancel</a>
-								<a href="#" title="Save" class="sprite save">Save</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<div id="teamanalysis" class="screen">
-			<div class="jbasewrap strip">
-				<h2>Team Analysis</h2>
-			</div>
-		</div>
-	</div><!-- end #wrapper -->
-	<script type="text/javascript" src="jquery-1.6.2.js"></script>
-	<script type="text/javascript" src="date.js"></script>
-	<script type="text/javascript" src="chrjs.js"></script>
-	<script type="text/javascript" src="jquery-json.min.js"></script>
-	<script type="text/javascript" src="iframe-comms.js"></script>
-	<script type="text/javascript" src="templ.js"></script>
-	<script type="text/javascript" src="attn.js"></script>
-	<script type="text/javascript" src="app.js"></script>
-</body>
+			</li>
+		</script>
+		<script type="text/javascript" src="jquery-1.6.2.js"></script>
+		<script type="text/javascript" src="date.js"></script>
+		<script type="text/javascript" src="chrjs.js"></script>
+		<script type="text/javascript" src="jquery-json.min.js"></script>
+		<script type="text/javascript" src="iframe-comms.js"></script>
+		<script type="text/javascript" src="templ.js"></script>
+		<script type="text/javascript" src="attn.js"></script>
+		<script type="text/javascript" src="app.js"></script>
+	</body>
 </html>
