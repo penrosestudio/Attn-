@@ -178,23 +178,23 @@ $(document).ready(function() {
 	
 	test("given an empty string, it should show all the periods", function() {
 		filterPeriods("#attnlist","");
-		var $periods = $('#attnlist .attnevent li'),
+		var $periods = $('#attnlist li ul li'),
 			actual = $periods.filter(':visible').length,
 			expected = $periods.length;
 		equals(actual, expected);
 	});
 
 	test("given a plain word, it should hide all periods that don't have projects that the word matches any part of", function() {
-		var $periods = $('#attnlist .attnevent li'),
+		var $periods = $('#attnlist li ul li'),
 			actual,
 			expected;
 		filterPeriods("#attnlist","o");
 		actual = $periods.filter(":visible").length;
-		expected = 4;
+		expected = 6;
 		equals(actual, expected);
 		filterPeriods("#attnlist","yo");
 		actual = $periods.filter(":visible").length;
-		expected = 2;
+		expected = 0;
 		equals(actual, expected);
 		filterPeriods("#attnlist","vo");
 		actual = $periods.filter(":visible").length;
@@ -211,12 +211,12 @@ $(document).ready(function() {
 	});
 	
 	test("it shouldn't be case-sensitive", function() {
-		var $periods = $('#attnlist .attnevent li'),
+		var $periods = $('#attnlist li ul li'),
 			actual,
 			expected;
-		filterPeriods("#attnlist","O");
+		filterPeriods("#attnlist","V");
 		actual = $periods.filter(":visible").length;
-		expected = 4;
+		expected = 1;
 		equals(actual, expected);
 	});
 	/*
@@ -320,8 +320,8 @@ $(document).ready(function() {
 	});
 	*/
 	test("if a day has no visible periods, it should hide that day", function() {
-		filterPeriods("#attnlist","bpsf");
-		var $days = $("#attnlist h3"),
+		filterPeriods("#attnlist","evo");
+		var $days = $("#attnlist span.date"),
 			actual = $days.filter(':visible').length,
 			expected = 1;
 		equals(actual, expected);
@@ -333,7 +333,7 @@ $(document).ready(function() {
 	
 	test("it should display the total duration of all visible periods", function() {
 		var duration = totalDuration("#attnlist"),
-			expected = 166937; // 46h 22m 17s!
+			expected = 37800;
 		equals(duration, expected);
 	});
 

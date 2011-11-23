@@ -68,7 +68,7 @@ $(document).bind("AttnEventSaveError", function(e, attnEvent) {
 
 function filterPeriods(periodsList,filterString) {
 	var $periodsList = $(periodsList),
-		$periods = $periodsList.find('ul').children('li').show(),
+		$periods = $periodsList.children('li').show().find('ul li').show(),
 		selector;
 	if(!$periods) {
 		return;
