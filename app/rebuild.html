@@ -38,7 +38,7 @@
 					<!-- <span id="infoText">not activated - please login</span>-->
 					<textarea id="notes"></textarea>
 					<textarea id="notes2"></textarea>
-					<img id="sync" src="ajax-loader.gif"/>
+					<img id="sync" src="ajax-loader.gif" />
 					<input id="save" class="sprite" type="button" value="Save" />
 				</div>
 				<button class="left">left</button>
@@ -48,7 +48,7 @@
 				<div class="jbasewrap container">
 					<input type="text" id="filterString" placeholder="type to filter&hellip;" />
 					<h2 id="totalSeconds">total attn! <span>0</span></h2>
-					<h2 id="averageSeconds">average attn! <span>0</span></h2>
+					<h2 id="averageSeconds">av. per week <span>0</span></h2>
 					<ul id="attnlist">
 						<li>Analysis here after loading&hellip;</li>
 					</ul>
@@ -62,7 +62,7 @@
 		</div><!-- end #wrapper -->
 		<script type="text/html" id="attnday_templ">
 			<li>
-				<span class="date"><%=date%></span>
+				<span class="date" data-datetime="<%=startDate.clearTime()%>"><%=date%></span>
 				<ul>
 					<% for(var i=periods.length-1; i>=0; i--) { %>					
 					<li>

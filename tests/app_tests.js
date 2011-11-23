@@ -337,9 +337,11 @@ $(document).ready(function() {
 		equals(duration, expected);
 	});
 
-	test("it should display the average duration per day of all visible periods", function() {
+	test("it should display the average duration per week of all visible periods", function() {
+		// the test data is over four days, but only features three days with periods
 		var durationPerDay = averageDuration("#attnlist"),
-			expected = 166937 / 3;
+			numberOfWeeks = 4 / 7,
+			expected = 37800 / numberOfWeeks;
 		equals(durationPerDay, expected);
 	});
 	

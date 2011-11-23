@@ -106,6 +106,14 @@ function filterPeriods(periodsList,filterString) {
 	});
 }
 
+function updateAverageDuration() {
+	var average = attn.formatDuration(averageDuration('#attnlist')*1000),
+		pieces = [];
+	pieces.push(average.hours || "0");
+	pieces.push(average.minutes || "00");
+	$('#averageSeconds span').html(pieces.join(":"));
+}
+
 function updateTotalDuration() {
 	var duration = attn.formatDuration(totalDuration('#attnlist')*1000),
 		durationArray = [];
@@ -118,6 +126,7 @@ $('#filterString').keyup(function() {
 	window.setTimeout(function() {
 		filterPeriods('#attnlist', $('#filterString').val());
 		updateTotalDuration();
+		updateAverageDuration();
 	}, 500);
 });
 
@@ -130,8 +139,17 @@ function clearFilterString() {
 
 
 function averageDuration(periodsList) {
-	var totalDuration = totalDuration(periodsList),
-		averageDuration = totalDuration / $(periodsList).children("li").length;
+	var total = totalDuration(periodsList),
+		$periodsList = $(periodsList),
+		$days = $periodsList.children(),
+		startingDay = $days.last().children('.date').data('datetime'),
+		startingDate = Date.parse(startingDay),
+		endingDay = $days.eq(0).children('.date').data('datetime'),
+		endingDate = Date.parse(endingDay),
+		daySpan = ((endingDate - startingDate) / 1000) / (60 * 60 * 24),
+		dayCount = daySpan + 1,
+		weekCount = dayCount / 7,
+		averageDuration = total / weekCount;
 	return averageDuration;
 }
 
@@ -141,7 +159,6 @@ function totalDuration(periodsList) {
 		$periodsList = $(periodsList),
 		$periods = $periodsList.find('ul').children('li:visible');
 	$periods.each(function(i, period) {
-		console.log($(period).find('.duration').data('duration'));
 		addSeconds = $(period).find('.duration').data('duration');
 		seconds += addSeconds;
 	});
