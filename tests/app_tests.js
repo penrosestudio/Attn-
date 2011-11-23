@@ -321,7 +321,7 @@ $(document).ready(function() {
 	*/
 	test("if a day has no visible periods, it should hide that day", function() {
 		filterPeriods("#attnlist","bpsf");
-		var $days = $("#attnlist h3");
+		var $days = $("#attnlist h3"),
 			actual = $days.filter(':visible').length,
 			expected = 1;
 		equals(actual, expected);
@@ -332,10 +332,15 @@ $(document).ready(function() {
 	});
 	
 	test("it should display the total duration of all visible periods", function() {
-		var duration = totalDuration("#attnlist");
+		var duration = totalDuration("#attnlist"),
 			expected = 166937; // 46h 22m 17s!
 		equals(duration, expected);
 	});
 
+	test("it should display the average duration per day of all visible periods", function() {
+		var durationPerDay = averageDuration("#attnlist"),
+			expected = 166937 / 3;
+		equals(durationPerDay, expected);
+	});
 	
 });

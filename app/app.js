@@ -128,13 +128,20 @@ function clearFilterString() {
 		.trigger(e);
 }
 
-// JB - these click functions don't have tests because they're purely beta, we should animate this just slightly better
+
+function averageDuration(periodsList) {
+	var totalDuration = totalDuration(periodsList),
+		averageDuration = totalDuration / $(periodsList).children("li").length;
+	return averageDuration;
+}
+
 function totalDuration(periodsList) {
 
 	var seconds = 0,
 		$periodsList = $(periodsList),
 		$periods = $periodsList.find('ul').children('li:visible');
 	$periods.each(function(i, period) {
+		console.log($(period).find('.duration').data('duration'));
 		addSeconds = $(period).find('.duration').data('duration');
 		seconds += addSeconds;
 	});
