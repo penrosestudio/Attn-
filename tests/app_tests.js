@@ -339,7 +339,7 @@ $(document).ready(function() {
 
 	test("it should display the average duration per day of all visible periods", function() {
 		var durationPerDay = averageDuration("#attnlist"),
-			expected = 166937 / 3;
+			expected = 37800 / 3;
 		equals(durationPerDay, expected);
 	});
 	

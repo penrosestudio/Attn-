@@ -40,14 +40,28 @@
 					<img id="sync" src="ajax-loader.gif"/>
 					<input id="save" class="sprite" type="button" value="Save" />
 				</div>
-				<button class="left">left</button>
-				<button class="right">right</button>
+				<button class="left"></button>
+				<button class="right"></button>
 			</div>
 			<div id="analysis" class="screen">
 				<div class="jbasewrap container">
 					<input type="text" id="filterString" placeholder="type to filter&hellip;" />
 					<!--<input type="submit" id="filterButton" value="Go!" />-->
-					<h2 id="totalSeconds">total attn! <span>0</span></h2>
+					
+					<div class="headlineStats">
+						<div class="statColumn">
+							<h2 id="totalSeconds"><span>03:20</span></h2>
+							<p>Total attn</p>
+						</div>
+						<div class="statColumn middle">
+							<h2 id="weeklyAverage"><span>22:12</span></h2>
+							<p>Weekly average</p>
+						</div>
+						<div class="statColumn">
+							<h2 id="totalOther"><span>24:09</span></h2>
+							<p>Hilarious nonStat!</p>
+						</div>
+					</div>
 					<ul id="attnlist">
 						<li><span class="date">11.12.11</span>
 							<ul>
@@ -79,7 +93,7 @@
 								</li>
 							</ul>
 						</li>
-						<li><span class="date">11.12.11</span>
+						<li><span class="date">10.12.11</span>
 							<ul>
 								<li class="">
 									<span class="project">Sweetspot</span>
@@ -109,7 +123,7 @@
 								</li>
 							</ul>
 						</li>
-						<li><span class="date">11.12.11</span>
+						<li><span class="date">09.12.11</span>
 							<ul>
 								<li>
 									<span class="project">Sweetspot</span>
