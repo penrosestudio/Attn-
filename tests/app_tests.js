@@ -340,8 +340,12 @@ $(document).ready(function() {
 	test("it should display the average duration per week of all visible periods", function() {
 		// the test data is over four days, but only features three days with periods
 		var durationPerDay = averageDuration("#attnlist"),
+<<<<<<< HEAD
 			numberOfWeeks = 4 / 7,
 			expected = 37800 / numberOfWeeks;
+=======
+			expected = 37800 / 3;
+>>>>>>> changed headline stat panel
 		equals(durationPerDay, expected);
 	});
 	
