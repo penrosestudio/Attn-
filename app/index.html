@@ -37,7 +37,6 @@
 					</ul>
 					<!-- <span id="infoText">not activated - please login</span>-->
 					<textarea id="notes"></textarea>
-					<textarea id="notes2"></textarea>
 					<img id="sync" src="ajax-loader.gif" />
 					<input id="save" class="sprite" type="button" value="Save" />
 				</div>
@@ -62,7 +61,7 @@
 		</div><!-- end #wrapper -->
 		<script type="text/html" id="attnday_templ">
 			<li>
-				<span class="date" data-datetime="<%=startDate.clearTime()%>"><%=date%></span>
+				<span class="date" data-datetime="<%=date%>"><%=date%></span>
 				<ul>
 					<% for(var i=periods.length-1; i>=0; i--) { %>					
 					<li>
@@ -82,8 +81,8 @@
 				</ul>
 			</li>
 		</script>
-		<script type="text/javascript" src="jquery-1.6.2.js"></script>
-		<script type="text/javascript" src="date.js"></script>
+		<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+		<script type="text/javascript" src="date-en-GB.js"></script>
 		<script type="text/javascript" src="chrjs.js"></script>
 		<script type="text/javascript" src="jquery-json.min.js"></script>
 		<script type="text/javascript" src="iframe-comms.js"></script>
