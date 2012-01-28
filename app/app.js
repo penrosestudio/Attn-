@@ -123,7 +123,10 @@ function updateTotalDuration() {
 }
 
 $('#filterString').keyup(function() {
-	window.setTimeout(function() {
+	if(window.filterTimeout) {
+		window.clearTimeout(window.filterTimeout);
+	}
+	window.filterTimeout = window.setTimeout(function() {
 		filterPeriods('#attnlist', $('#filterString').val());
 		updateTotalDuration();
 		updateAverageDuration();

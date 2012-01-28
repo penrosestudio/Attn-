@@ -1,0 +1,7 @@
+table {
+	background-color: #ddd;
+}
+
+table td, table th {
+	padding: 5px;
+}
