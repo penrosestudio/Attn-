@@ -283,6 +283,7 @@ var debug = false,
 					attn.attnEvents = attnTiddlers;
 					callback(attnTiddlers);
 				};
+		//	url = "/search?q=bag:attn_joshuwar_*%20_limit:999999&fat=1&sort=-title";
 			if(!username) {
 				return;
 			}

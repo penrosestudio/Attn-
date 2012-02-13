@@ -302,14 +302,55 @@ $(document).ready(function() {
 		}
 	});
 	
+	// add period editing behaviours
 	$('a.edit').live("click", function(e) {
 		e.preventDefault();
 		$(this).parent().addClass('editing');
 	});
-	
 	$('a.cancel').live("click", function(e) {
 		e.preventDefault();
 		$(this).parent().removeClass('editing');
+	});
+	$('a.save').live("click", function(e) {
+		e.preventDefault();
+		var $tick = $(this),
+			$siblings = $tick.siblings(),
+			notesAfter = $siblings.filter('textarea.notes').val(),
+			durationAfter = $siblings.filter('input.duration').val(),
+			projectAfter = $siblings.filter('input.project').val(),
+			notesBefore = $siblings.filter('span.notes').text(),
+			durationBefore = $siblings.filter('span.duration').text(),
+			projectBefore = $siblings.filter('span.project').text(),
+			notesChanged = notesBefore!==notesAfter,
+			durationChanged = durationBefore!==durationAfter,
+			projectChanged = projectBefore!==projectAfter,
+			durationStringToEpoch = function(str) { // TO-DO: put durationString manipulation into its own pair of inverse functions, which would be good candidates for tests
+				var bits = str.split(":"),
+					hours = parseInt(bits[0],10),
+					minutes = parseInt(bits[1],10) || 0;
+				return hours*3600000 + minutes*60000;
+			},
+			startingEpoch = parseInt($siblings.filter('span.duration').data('start'),10),
+			durationMsAfter = durationStringToEpoch(durationAfter),
+			durationMsBefore = durationStringToEpoch(durationBefore);
+		if (durationChanged === true){
+			if (durationMsBefore > durationMsAfter) {
+				attn.saveEvent({
+					time: new Date(startingEpoch + durationMsAfter),
+					project: "off"
+				}, host);
+			} else {
+				// TO-DO: show some error notification
+				return false;
+			}	
+		} 
+		if (projectChanged === true || notesChanged === true) {
+			attn.saveEvent({
+				time: new Date(startingEpoch),
+				project: projectAfter,
+				note: notesAfter
+			}, host);
+		}
 	});
 	
 	/* this is only needed with iframe-comms.js, not iframe-comms2.js

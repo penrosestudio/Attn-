@@ -66,7 +66,7 @@
 					<% for(var i=periods.length-1; i>=0; i--) { %>					
 					<li>
 						<span class="project"><%=periods[i].project%></span>
-						<span class="duration" data-duration="<%=(periods[i].duration / 1000) || 0%>" title="<%=date%> <%=periods[i].starttime%> <% if(periods[i].end) {%>- <%=periods[i].endtime%><% } else {%>(open)<%}%>"><% if(periods[i].end) {%><%=periods[i].durationString%><% } else {%>(open)<%}%></span>
+						<span class="duration" data-duration="<%=(periods[i].duration / 1000) || 0%>" data-start="<%=periods[i].start %>" title="<%=date%> <%=periods[i].starttime%> <% if(periods[i].end) {%>- <%=periods[i].endtime%><% } else {%>(open)<%}%>"><% if(periods[i].end) {%><%=periods[i].durationString%><% } else {%>(open)<%}%></span>
 						<span class="notes"><%=periods[i].notes%></span>
 						<a href="#" title="Edit" class="sprite edit">Edit</a>
 						
