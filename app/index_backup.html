@@ -8,48 +8,93 @@
 		<link rel="stylesheet" type="text/css" href="grid.css" />
 		<link rel="stylesheet" type="text/css" href="stickyfooter.css" />
 		<link rel="stylesheet" type="text/css" media="all" href="style.css" />
+		<script type="text/javascript">
+			document.documentElement.className = "js";
+			if(window.location.host.indexOf('www')!==-1) { /* remove this bit when the server-side rewrite is happening */
+				window.location.href = window.location.href.replace('www.','');
+			}
+		</script>
+	</head>
 	<body>
-		<!-- TO-DO: style this <noscript>You need JavaScript enabled to run Attn!</noscript>-->
+		<div id="header">
+			<a href="#" id="accountID" class="button">Not logged in</a>
+			<a href="http://attn.uservoice.com" class="button" target="_blank" title="Attn! feedback forum on UserVoice">Feedback</a>
+			<a href="/intro" class="button" title="What is this 'Attn!'?">?</a>
+		</div>
 		<div id="wrapper">
-			<div id="metaInfo">
-				<span id="accountID"></span>
-				<a href="mailto:contact@attnbang.com">contact</a>
-			</div>
-			<div class="jbasewrap">
-				<input id="attn" />
-				<ul>
-					<li class="selected" id="actionText"></li>
-				</ul>
-				<span id="infoText"></span>
+			<div id="login" class="screen">
 				<form id="loginForm">
 					<label for="loginID">Login ID</label>
 					<input id="loginID" name="loginID" type="text" />
 					<label for="password">Password</label>
 					<input id="password" name="password" type="password" />
+					<br class="clearboth"/>
 					<input type="submit" name="submitButton" value="Log in" />
-					<p id="loginError"></p>
+					<p id="loginError">There was a problem with logging in, please try again</p>
 				</form>
-			</div> <!-- close .jbasewrap -->
-			<div class="push"></div>
-		</div> <!-- close #wrapper -->
-		<div class="footer">
-			<span>Attn!</span>
-			<div class="white">
-				<a href="http://www.withjandj.com" target="_blank">J&amp;J</a>
 			</div>
-			<div class="jbasewrap">
-
-			</div>			
-        </div>
-		<script type="text/javascript" src="http://tiddlyspace.com/bags/attn-test_public/tiddlers/jquery-1.6.2.js"></script>
-		<script type="text/javascript" src="http://tiddlyspace.com/bags/attn-test_public/tiddlers/date.js"></script>
-		<script type="text/javascript" src="http://tiddlyspace.com/bags/attn-test_public/tiddlers/chrjs.js"></script>
-		<script type="text/javascript" src="http://tiddlyspace.com/bags/attn-test_public/tiddlers/jquery-json.min.js"></script>
-		<script type="text/javascript" src="iframe-comms.js"></script>
-		<script type="text/javascript" src="http://tiddlyspace.com/bags/attn-test_public/tiddlers/attn.js"></script>
-		<script type="text/javascript" src="http://tiddlyspace.com/bags/attn-test_public/tiddlers/app.js"></script>
-		<!--[if (gte IE 6)&(lte IE 8)]>
-		  <script type="text/javascript" src="selectivizr.min.js"></script>
-		<![endif]--> 
+			<div id="input" class="screen">
+				<div class="container">
+					<input id="attn"/>
+					<ul>
+						<li class="selected" id="actionText"></li>
+					</ul>
+					<span id="infoText">not activated - please login</span>
+					<textarea id="notes"></textarea>
+				</div>
+				<button class="left">left</button>
+				<button class="right">right</button>
+			</div>
+			<div id="analysis" class="screen">
+				<div class="jbasewrap strip">
+					<ul id="attnlist">
+						<li>Analysis here...</li>
+					</ul>
+				</div>
+			</div>
+			<div id="teamanalysis" class="screen">
+				<div class="jbasewrap strip">
+					<h2>Team Analysis</h2>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<img src="attn_logo.png"/>
+		</div>
+		<script type="text/html" id="attnday_templ">
+			<li>
+				<h3><%=date%></h3>
+				<ul class="attnevent">
+					<% for(var i=periods.length-1; i>=0; i--) { %>
+					<li>
+						<div class="project">
+							<p class="projectedit" contenteditable="true"><%=periods[i].project%></p>
+							<div class="editableToolbar">
+								<a class="tick" href="#">save</a><a class="cross" href="#">cancel</a>
+							</div>
+						</div>
+						<div class="time"><span class="timeedit"><%=periods[i].starttime%> <% if(periods[i].end) {%>- <%=periods[i].endtime%><% } else {%>(open)<%}%></span></div>
+						<div class="period"><span class="periodedit"><%=periods[i].durationString%></span></div>
+						<div class="notes">
+							<p class="notesedit" contenteditable="true"><%=periods[i].notes%></p>
+							<div class="editableToolbar">
+								<a class="tick" href="#">save</a><a class="cross" href="#">cancel</a>
+							</div>
+						</div>
+					</li>
+					<% } %>
+				</ul>
+			</li>
+		</script>
+		<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+		<script type="text/javascript" src="date.js"></script>
+		<script type="text/javascript" src="chrjs.js"></script>
+		<script type="text/javascript" src="jquery-json.min.js"></script>
+		<script type="text/javascript" src="jquery.ba-postmessage.min.js"></script>
+		<script type="text/javascript" src="iframe-comms2.js"></script>
+		<!-- <script type="text/javascript" src="iframe-comms.js"></script> - this is only appropriate when the app is on tiddlyspace.com -->
+		<script type="text/javascript" src="templ.js"></script>
+		<script type="text/javascript" src="attn.js"></script>
+		<script type="text/javascript" src="app.js"></script>
 	</body>
 </html>
