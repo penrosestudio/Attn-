@@ -189,6 +189,19 @@ var debug = false,
 		addNote: function(parsed, note) {
 			parsed.note = note;
 		},
+		deleteEvent: function(parsed, host) {
+			var tiddler = new TiddlyWeb.Tiddler(parsed.time.getTime().toString()),
+				success = function() {
+					
+				},
+				error = function() {
+				
+				},
+				//day = attn.now.toString("yyyyMMdd"),
+				bag = attn.bagPrefix+attn.settings.username+"_"+day;
+			tiddler.bag = new TiddlyWeb.Bag(bag, host);
+			tiddler.delete(success, error);
+		},
 		saveEvent: function(parsed,host) {
 			var tiddler = new TiddlyWeb.Tiddler(parsed.time.getTime().toString()),
 				tagsToAdd = ["attn","project:"+parsed.project],

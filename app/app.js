@@ -1,4 +1,7 @@
-/* TO-DO: don't use the iframe-comms2 thing if it's running off a local file */
+/* 	TO-DO: don't use the iframe-comms2 thing if it's running off a local file 
+	TO-DO: de-duplicate the to: & from: filterString functions
+
+*/
 
 var command,
 	error,
@@ -69,7 +72,11 @@ $(document).bind("AttnEventSaveError", function(e, attnEvent) {
 function filterPeriods(periodsList,filterString) {
 	var $periodsList = $(periodsList),
 		$periods = $periodsList.children('li').show().find('ul li').show(),
-		selector;
+		selector,
+		compare = function($test) {
+			// expect compare to return true if there is a "match" between $test and filterString
+			return $test.text().toLowerCase().indexOf(filterString)!==-1;
+		};
 	if(!$periods) {
 		return;
 	}
@@ -83,14 +90,31 @@ function filterPeriods(periodsList,filterString) {
 		if (filterString.indexOf('"')===0 && filterString.lastIndexOf('"')===filterString.length-1) {
 			filterString = filterString.substring(1, filterString.length-1);	
 		}
+	} else if (filterString.indexOf("to:")===0) {
+		$periods = $periodsList.children('li');
+		selector = ".date";
+		filterString = filterString.substring(3);
+		compare = function($test) {
+			return Date.parse(filterString)>=Date.parse($test.text()); 
+		};
+	} else if (filterString.indexOf("from:")===0) {
+		$periods = $periodsList.children('li');
+		selector = ".date";
+		filterString = filterString.substring(5);
+		compare = function($test) {
+			return Date.parse(filterString)<=Date.parse($test.text()); 
+		}; 
 	} else {
 		selector = ".project";
+	}
+	if (!filterString) {
+		return;
 	}
 	
 	$.each( $periods, function(i, period) {
 		var $period = $(period),
 			$toTest = $period.find(selector);
-		if (!$toTest.length || $toTest.text().toLowerCase().indexOf(filterString)===-1) {
+		if (!$toTest.length || !compare($toTest)) {
 			$period.hide();
 		}
 	});

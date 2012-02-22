@@ -468,6 +468,30 @@ $(document).ready(function() {
 		attn.saveNotes(this.notesElem);
 	});
 	
+	module("deleteEvent", {
+		setup: function() {
+			host = "http://attn-test.tiddlyspace.com";
+		}
+	});
+
+	test("given an attn event and a remote host, it should DELETE to that host", function() {
+		var tmpAjax = $.ajax,
+			now = new Date(),
+			parsed = attn.parseCommand("project1 meeting", now);
+		$.ajax = function(options) {
+			var url = options.url,
+				type = options.type,
+				deleteHost = url.substring(0,url.indexOf("/",url.indexOf("http://")+7)),
+				epochTime = url.substring(url.lastIndexOf("/")+1);
+			equals(type, "DELETE");
+			equals(epochTime, now.getTime());
+			equals(deleteHost, host);
+			$.ajax = tmpAjax;
+		};
+		expect(3);
+		attn.deleteEvent(parsed, host);
+	});
+
 	module("saveEvent", {
 		setup: function() {
 			host = "http://attn-test.tiddlyspace.com";
