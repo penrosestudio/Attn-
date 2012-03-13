@@ -168,7 +168,7 @@ function clearFilterString() {
 function averageDuration(periodsList) {
 	var total = totalDuration(periodsList),
 		$periodsList = $(periodsList),
-		$days = $periodsList.children(),
+		$days = $periodsList.children(':visible'),
 		startingDay = $days.last().children('.date').data('datetime'),
 		startingDate = Date.parse(startingDay),
 		endingDay = $days.eq(0).children('.date').data('datetime'),
