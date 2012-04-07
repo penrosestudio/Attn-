@@ -75,49 +75,64 @@ function filterPeriods(periodsList,filterString) {
 		selector,
 		compare = function($test) {
 			// expect compare to return true if there is a "match" between $test and filterString
-			return $test.text().toLowerCase().indexOf(filterString)!==-1;
-		};
+			return $test.text().toLowerCase().indexOf(filter)!==-1;
+		},
+		tokenRegex = /[^\s]+:"[^"]*"|[^\s"]+|"([^"]*)"/g,
+		tokens,
+		filter,
+		filterBy = function(tokens) {
+			filter = tokens[0];
+			if (filter.indexOf("notes:")===0) {
+				selector = ".notes";
+				filter = filter.substring(6);
+				if (filter.indexOf('"')===0 && filter.lastIndexOf('"')===filter.length-1) {
+					filter = filter.substring(1, filter.length-1);	
+				}
+			} else if (filter.indexOf("to:")===0) {
+				$periods = $periodsList.children('li');
+				selector = ".date";
+				filter = filter.substring(3);
+				compare = function($test) {
+					return Date.parse(filter)>=Date.parse($test.text()); 
+				};
+			} else if (filter.indexOf("from:")===0) {
+				$periods = $periodsList.children('li');
+				selector = ".date";
+				filter = filter.substring(5);
+				compare = function($test) {
+					return Date.parse(filter)<=Date.parse($test.text()); 
+				}; 
+			} else {
+				selector = ".project";
+			}
+			if(!filter) {
+				return;
+			}
+			$.each( $periods, function(i, period) {
+				var $period = $(period),
+					$toTest = $period.find(selector);
+				if (!$toTest.length || !compare($toTest)) {
+					$period.hide();
+				}
+			});
+		}
+
 	if(!$periods) {
 		return;
 	}
-	if (!filterString) {
+	if(!filterString) {
 		return;
 	}
 	filterString = filterString.toLowerCase();
-	if (filterString.indexOf("notes:")===0) {
-		selector = ".notes";
-		filterString = filterString.substring(6);
-		if (filterString.indexOf('"')===0 && filterString.lastIndexOf('"')===filterString.length-1) {
-			filterString = filterString.substring(1, filterString.length-1);	
-		}
-	} else if (filterString.indexOf("to:")===0) {
-		$periods = $periodsList.children('li');
-		selector = ".date";
-		filterString = filterString.substring(3);
-		compare = function($test) {
-			return Date.parse(filterString)>=Date.parse($test.text()); 
-		};
-	} else if (filterString.indexOf("from:")===0) {
-		$periods = $periodsList.children('li');
-		selector = ".date";
-		filterString = filterString.substring(5);
-		compare = function($test) {
-			return Date.parse(filterString)<=Date.parse($test.text()); 
-		}; 
-	} else {
-		selector = ".project";
-	}
-	if (!filterString) {
-		return;
-	}
 	
-	$.each( $periods, function(i, period) {
-		var $period = $(period),
-			$toTest = $period.find(selector);
-		if (!$toTest.length || !compare($toTest)) {
-			$period.hide();
-		}
-	});
+	// break up the filter string into functional pieces and filter by each one
+	tokens = tokenRegex.exec(filterString);
+	while(tokens) {
+		filterBy(tokens);
+		$periods = $periodsList.children('li').find('ul li');
+		tokens = tokenRegex.exec(filterString);
+	}
+
 	// find all days in attnlist
 	// if there is no visible child inside any day (ie. direct child) of the attnlist ul
 	// hide it

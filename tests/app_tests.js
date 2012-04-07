@@ -304,28 +304,33 @@ $(document).ready(function() {
 		expected = 6;
 		equals(actual, expected);
 	});
-	/*
+
 	test("given combinations of the filters, it should hide the periods that don't match all the filters", function() {
-		var actual,
+		var $periods = $('#attnlist li ul li'),
+			actual,
 			expected;
-		actual = attn.filterPeriods('o from:"July 20th"').length;
-		expected = 4;
+		filterPeriods("#attnlist", 'spot from:10.12.2011');
+		actual = $periods.filter(":visible").length;
+		expected = 3;
 		equals(actual, expected);
-		actual = attn.filterPeriods('to:"July 20th" from:"July 20th"').length;
+		/*
+		filterPeriods("#attnlist", 'to:20.07.2011 from:20.07.2011');
+		actual = $periods.filter(":visible").length;
 		expected = 1;
 		equals(actual, expected);
-		actual = attn.filterPeriods('yo notes:note').length;
-		expected = 1;
-		equals(actual, expected);
-		actual = attn.filterPeriods('yo from:"July 20th" to:"July 22nd"').length;
-		expected = 1;
-		equals(actual, expected);
-	});
-	
-	test("it should hide any days that have no periods", function() {
 		
+		filterPeriods("#attnlist", 'yo notes:note');
+		actual = $periods.filter(":visible").length;
+		expected = 1;
+		equals(actual, expected);
+
+		filterPeriods("#attnlist", 'yo from:20.07.2011 to:22.07.2011');
+		actual = attn.filterPeriods('').length;
+		expected = 1;
+		equals(actual, expected);
+		*/
 	});
-	
+	/*
 	test("it should show any days that have periods", function() {
 		
 	});
