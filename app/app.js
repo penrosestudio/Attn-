@@ -71,7 +71,7 @@ $(document).bind("AttnEventSaveError", function(e, attnEvent) {
 
 function filterPeriods(periodsList,filterString) {
 	var $periodsList = $(periodsList),
-		$periods = $periodsList.children('li').show().find('ul li').show(),
+		$periods = $periodsList.children('li').show().find('ul li').css('display',''),
 		selector,
 		compare = function($test) {
 			// expect compare to return true if there is a "match" between $test and filterString
@@ -112,7 +112,7 @@ function filterPeriods(periodsList,filterString) {
 				var $period = $(period),
 					$toTest = $period.find(selector);
 				if (!$toTest.length || !compare($toTest)) {
-					$period.hide();
+					$period.css('display','none');
 				}
 			});
 		}
@@ -124,7 +124,6 @@ function filterPeriods(periodsList,filterString) {
 		return;
 	}
 	filterString = filterString.toLowerCase();
-	
 	// break up the filter string into functional pieces and filter by each one
 	tokens = tokenRegex.exec(filterString);
 	while(tokens) {
@@ -169,7 +168,7 @@ $('#filterString').keyup(function() {
 		filterPeriods('#attnlist', $('#filterString').val());
 		updateTotalDuration();
 		updateAverageDuration();
-	}, 500);
+	}, 1000);
 });
 
 function clearFilterString() {
