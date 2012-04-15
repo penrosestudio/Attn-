@@ -1,0 +1,509 @@
+
+/* Generic 
+
+#261b1b - dark brown
+#f0efe2 - off white 
+#908f88 - lighter brown
+
+
+*/
+
+
+
+body {
+	font-family: "interstate-regular", "Helvetica Neue", Helvetica, Arial, sans;
+	background-color: #f0efe2;
+	background-image: url(mono-texture-100pc.png);
+	color: #333;
+	width: 100%;
+	overflow: hidden;
+	letter-spacing: 0.08em;
+}
+
+
+
+input {
+	font-family: "interstate-regular", "Helvetica Neue", Helvetica, Arial, sans;
+	border: none;
+	border-bottom: 1px dashed #908f88;
+	background-color: transparent;
+	font-size: 11px;
+	letter-spacing: 0.08em;
+	color: #333;
+	font-weight: normal;
+}
+
+.sprite {
+	background-image: url(sprite.png);
+	background-position: -10px -100px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	cursor: pointer;
+	height: 20px;
+	width: 20px;
+	text-indent: -999px;
+	overflow: hidden;
+	display: block;
+    border: none;
+}
+
+.sprite:hover {
+	opacity: 0.7;
+}
+
+
+#header {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 400px;
+	height: 20px;
+	z-index: 2;
+	text-align: right;
+	padding-right: 110px;
+}
+
+#wrapper {
+	width: 400%;
+	height: 100%;
+	position: relative;
+	left: 0;
+	background: url("ajax-loader.gif") no-repeat scroll 12.5% center transparent;
+}
+
+#wrapper {
+	background: none;
+}
+
+.screen {
+	width: 25%;
+	height: 100%;
+	float: left;
+	position: relative;
+}
+
+.js .screen {
+	display: none;
+}
+
+button {
+	border: none;
+	position: fixed;
+    width: 100px;
+    height: 100%;
+    top: 0px;
+    text-indent: -9999px;
+    background-repeat: no-repeat;
+	background-position: center center;
+	-webkit-transition: 0.4s ease-out;
+	-moz-transition: 0.4s ease-out;
+	-o-transition: 0.4s ease-out;
+	transition: 0.4s ease-out;
+	z-index: 3;
+	background-color: rgba(255,255,255,0);
+}
+
+button:hover {
+	opacity:0.7;
+	cursor: pointer;
+	background-color: rgba(255,255,255,8);
+}
+
+button.right {
+	right: 0px;
+
+}
+
+button.right span {
+	background-position: -10px -130px; 
+}
+
+button.left span {
+	background-position: -10px -160px; 
+	position: relative;
+	left: 60px;
+}
+
+button.left {
+	left: 0px;
+}
+
+
+a.button {
+	background-color: #e6e6e6;
+	border: none;
+	font-size: 10px;
+	text-decoration: none;
+	padding: 3px 5px;
+	color: #7a7a7a;
+	-moz-border-radius: 3px; 
+  	-webkit-border-radius: 3px; 
+    border-radius: 3px;       
+  	-moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box; 
+  	letter-spacing: 0.05em;
+  	cursor:pointer;
+  	
+  	-moz-box-shadow:inset 0 0 5px #ccc;
+   	-webkit-box-shadow:inset 0 0 5px #ccc;
+	box-shadow:inset 0 0 5px #ccc;
+  	     
+     -webkit-transition: 0.4s ease-out;
+	-moz-transition: 0.4s ease-out;
+	-o-transition: 0.4s ease-out;
+	transition: 0.4s ease-out;
+	
+	margin: 10px 5px 0px;
+	float: none;
+	display: inline-block;
+	border-bottom: 1px solid #ccc;
+	line-height: 14px;
+}
+
+a.button:hover {
+	-moz-box-shadow:inset 0 0 5px #bbb;
+   	-webkit-box-shadow:inset 0 0 5px #bbb;
+	box-shadow:inset 0 0 5px #bbb;
+	background-color: #ddd;
+	color: #666;
+}
+
+/* Log in */
+
+
+#analysis, #intro, #teamanalysis {
+	overflow-y: scroll;
+}
+
+#loginForm {
+	width: 300px;
+	margin: auto;
+	overflow: hidden;
+	letter-spacing: 0.04em;
+	font-size: 11px;
+	color: #261b1b;
+	margin-bottom: 10px;
+}
+
+h1 {
+	font-size: 18px;
+	line-height: 18px;
+	letter-spacing: -0.02em;
+	border-bottom: 1px #dedede solid;
+	margin: 0px 0px;
+	background: #261b1b url(mono-texture-40pc.png);
+	color: #ebebe7;
+	padding: 70px 10px 10px;
+    text-align: right;
+}
+
+#loginForm label {
+	width: 90px;
+	display: inline-block;
+	text-align: right;
+	margin-right: 10px;
+}
+
+#loginForm input {
+	width: 180px;
+	height: 20px;
+	padding: 5px;
+	margin: 10px 0px 20px;
+	background-color: transparent;
+}
+
+#loginForm input[type=submit] {
+	width: 20px;
+	height: 20px;
+    cursor: pointer;
+    padding: 4px 0 7px;
+    margin-top: 0px;
+}
+
+
+#loginForm p {
+	font-size: 11px;
+	line-height: 18px;
+	display: none;
+}
+
+/* Attn Input */
+
+#input .container {
+	width: 300px;
+	margin: 0px auto;
+	position: relative;
+}
+
+#input #attn {
+	background-color: transparent;
+	width: 280px;
+	height: 30px;
+	font-size: 20px;
+	padding: 10px;
+}
+
+#input ul { /* this is the ul for #actionText */
+	list-style: none;
+	margin: 10px 0;
+	font-size: 12px;
+	overflow: hidden;
+}
+
+#input ul li {
+	list-style: none;
+	letter-spacing: 0.02em;
+	padding: 2px 10px;	
+	display: inline;
+	clear: both;
+	float: left;
+	margin-bottom: 10px;
+	background: #b8b7aa url(mono-texture-100pc-quarter.png);
+	text-shadow: 0px 1px 1px #fff;
+}
+
+#input ul li.selected {
+	background-color: #ffed00;
+}
+
+#input ul li.selected:empty {
+	padding: 0;
+}
+
+textarea#notes2 {
+	width: 280px;
+	resize: none;
+	height: 100px;
+	font-family: Helvetica;
+	color: #555;
+	padding: 10px;
+	border: none;
+}
+
+img#sync {
+	position: absolute;
+	right: -30px;
+	top: 110px;
+}
+
+input#save {
+    bottom: 0px;
+	float: right;
+	margin-top: 10px;
+}
+
+input#save:hover {
+	opacity: 0.7;
+}
+
+/* Analysis Screen */
+
+#analysis .container {
+	width: 600px;
+	margin: auto;
+}
+
+#analysis #head {
+	font-size: 18px;
+	line-height: 18px;
+	letter-spacing: -0.02em;
+	margin: 0px 0px;
+	background: #261b1b url(mono-texture-40pc.png);
+	color: #ebebe7;
+	padding: 0px 10px 10px;
+    text-align: right;
+    height: 90px
+}
+
+
+#filterString {
+	width: 170px;
+	border-bottom: none;
+	font-size: 18px;
+	line-height: 18px;
+	letter-spacing: -0.02em;
+	color: #ebebe7;
+    text-align: right;
+    margin-top: 70px;
+}
+
+#head h2 {
+	font-size: 14px;
+	font-family: interstate-regular;
+	text-align: left;
+	float: left;
+	margin: 33px 40px 0px 0px;
+}
+
+#head h2 span {
+	font-size: 38px;
+	font-family: interstate-bold;
+	display: block;
+	margin-bottom: -28px;
+}
+
+
+/* Attn List */
+
+#attnlist {
+	margin: 0px;
+	font-size: 14px;
+	line-height: 22px;
+	letter-spacing: 0.02em;
+}
+
+#attnlist li {
+	border-top: 1px dashed #908f88;
+	clear: right;
+	list-style: none;
+}
+
+#attnlist ul li {
+	width: 514px;
+	float: right;
+    padding: 10px 3px;
+    position: relative;
+}
+
+#attnlist ul li:first-child {
+	border-top: none;
+}
+
+.date {
+	float: left;
+	width: 80px;
+	padding-top: 10px;
+}
+
+.project, .duration, .notes {
+	display: block;
+	float: left;
+}
+
+.project {
+	width: 88px;
+	padding: 1px 0px 0px 2px;
+	font-family: interstate-bold;
+}
+
+.duration {
+	width: 70px;
+	font-size: 16px;
+}
+
+.notes {
+	width: 354px;
+	padding-top: 1px;
+}
+
+#attnlist ul li:hover {
+	background: url("mono-texture-100pc-quarter.png") repeat scroll 0 0 #FFED00;
+}
+
+#attnlist ul li:hover a.edit, a.edit:hover {
+	opacity: 1;
+}
+
+ul#attnlist ul li a.edit {
+	background-position: 0px -5px;
+	position: absolute;
+	right: -40px;
+	padding-left: 10px;
+	width:30px;
+	height: 30px;
+	top: 50%;
+	margin-top: -15px;
+	opacity: 0;
+	display: block;
+}
+
+#attnlist ul li.editing:hover {
+	background: transparent;
+}
+
+#attnlist ul li.editing:hover a.edit, #attnlist ul li.editing a.edit:hover {
+	opacity: 0;
+}
+
+#attnlist ul li.editing span {
+	display: none;
+}
+
+#attnlist ul li.editing {
+	padding: 10px 0px;
+}
+
+#attnlist ul li.editing input, #attnlist ul li.editing textarea {
+	 background: white;
+	 font-family: Helvetica, Arial;
+	 color: #555;
+	 font-size: 13px;
+	 height: 20px;
+	 padding: 5px 10px;
+	 border: 1px solid #dedede;
+}
+
+#attnlist ul li.editing input.project {
+	margin-right: 10px;
+	width: 48px;
+	display: block;
+}
+
+#attnlist ul li.editing input.duration {
+	width: 38px;
+	margin-right: 10px;
+	display: block;
+}
+
+#attnlist ul li.editing textarea.notes {
+	resize: none;
+	padding: 9px;
+	height: 63px;
+	display: block;
+	font-size: 12px;
+	line-height: 22px;
+	width: 344px;
+}
+
+#attnlist ul li input.project {
+	display: none;
+}
+
+#attnlist ul li input.duration {
+	display: none;
+}
+
+#attnlist ul li textarea.notes {
+	display: none;
+}
+
+#attnlist ul li a.sprite {
+	display: none;
+}
+
+#attnlist ul li.editing a.sprite {
+	display: none;
+}
+
+
+#attnlist ul li.editing a.delete {
+	position: absolute;
+	bottom: 70px;
+	right: -30px;
+	background-position: -10px -40px;
+	display: block;
+}
+
+#attnlist ul li.editing a.cancel {
+	position: absolute;
+	bottom: 40px;
+	right: -30px;
+	background-position: -10px -70px;
+	display: block;
+}
+
+#attnlist ul li.editing a.save {
+	position: absolute;
+	bottom: 10px;
+	right: -30px;
+	display: block;
+}

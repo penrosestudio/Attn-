@@ -3,8 +3,17 @@
 	<head>
 		<title>Attn!</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="reset.css" />
 		<link rel="stylesheet" type="text/css" href="jbase.css" />
+		<link rel="stylesheet" type="text/css" href="grid.css" />
+		<link rel="stylesheet" type="text/css" href="stickyfooter.css" />
 		<link rel="stylesheet" type="text/css" media="all" href="style-v3.css" />
+		<style type="text/css">
+		
+			#wrapper {
+				left: -3840px;
+			}
+		</style>
 	</head>
 	<body>
 		<div id="header">
@@ -16,20 +25,20 @@
 			<div id="login" class="screen">
 				<form id="loginForm">
 					<h1>attn!</h1>
-					<div class="right">
-						<label for="loginID">Email</label>
+						<label for="loginID">username</label>
 						<input id="loginID" name="loginID" type="text" />
-						<label for="password">Password</label>
+						<label for="password">password</label>
 						<input id="password" name="password" type="password" />
-						<input class="right" type="submit" name="submitButton" value="Log in" />
-					</div>
+						<input class="right sprite" type="submit" name="submitButton" value="Log in" />
 					<p>There was a problem with logging in, please try again</p>
 				</form>
 			</div>
 			<div id="input" class="screen">
 				<div class="container">
+					<h1>attn!</h1>
 					<input placeholder="Type&hellip;" id="attn"/>
 					<ul>
+						<li class="" id="actionText">other text</li>
 						<li class="selected" id="actionText">helper text</li>
 					</ul>
 					<!-- <span id="infoText">not activated - please login</span>-->
@@ -38,17 +47,50 @@
 					<img id="sync" src="ajax-loader.gif"/>
 					<input id="save" class="sprite" type="button" value="Save" />
 				</div>
-				<button class="left">left</button>
-				<button class="right">right</button>
+				<button class="left">left <span class="sprite"></span></button>
+				<button class="right">right <span class="sprite"></span></button>
 			</div>
 			<div id="analysis" class="screen">
 				<div class="jbasewrap container">
-					<input type="text" id="filterString" placeholder="type to filter&hellip;" />
-					<h2 id="totalSeconds">total attn! <span>0</span></h2>
-					<h2 id="averageSeconds">average attn! <span>0</span></h2>
+					<div id="head">
+						<input type="text" id="filterString" placeholder="type to filter attn" />
+						<h2 id="totalSeconds"><span>512:23</span><br/>total attn</h2>
+						<h2 id="averageSeconds"><span>21:01</span><br/>average per week </h2>
+					</div>
 					<ul id="attnlist">
-						<li>Analysis here after loading&hellip;</li>
+						<li>
+							<span class="date" data-datetime="11.04.2012">11.04.12</span>
+							<ul>
+								<li>
+									<span class="project">attn</span>
+									<span class="duration" title="09.04.2012 1:45pm - 1:05pm" data-start="1333975531177" data-duration="83984.112">23:20</span>
+									<span class="notes">Mega machine writing notes and spans</span>
+									<a class="sprite edit" title="Edit" href="#">Edit</a>
+									<input class="project" value="attn">
+									<input class="duration" value="23:20">
+									<textarea class="notes">Mega machine writing notes and spans</textarea>
+									<a class="sprite delete" title="Delete" href="#">Delete</a>
+									<a class="sprite cancel" title="Cancel" href="#">Cancel</a>
+									<a class="sprite save" title="Save" href="#">Save</a>
+								</li>
+								<li>
+									<span class="project">attn</span>
+									<span class="duration" title="09.04.2012 1:02pm - 1:45pm" data-start="1333972945361" data-duration="2585.816">0:43</span>
+									<span class="notes">Mega machine writing notes and spans</span>
+									<a class="sprite edit" title="Edit" href="#">Edit</a>
+									<input class="project" value="attn">
+									<input class="duration" value="0:43">
+									<textarea class="notes">Mega machine writing notes and spans</textarea>
+									<a class="sprite delete" title="Delete" href="#">Delete</a>
+									<a class="sprite cancel" title="Cancel" href="#">Cancel</a>
+									<a class="sprite save" title="Save" href="#">Save</a>
+								</li>
+							</ul>
+						</li>
 					</ul>
+					<!--<ul id="attnlist">
+						<li>Analysis here after loading&hellip;</li>
+					</ul> -->
 				</div>
 			</div>
 			<div id="teamanalysis" class="screen">
