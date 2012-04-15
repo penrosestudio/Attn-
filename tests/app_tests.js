@@ -2,6 +2,7 @@
 // TO-DO: fix test "it should attempt a sync if the notes box is blurred"
 // TO-DO: make sure that the storing of the note for comparison when box is blurred is working, as it doesn't look to be (despite tests passing)
 // TO-DO: add tests for not clearing notes box until the attn is changed; and don't save a new attn event if the attn doesn't change but you hit enter in the attn box (this is so you can go back to editing the same event)
+// TO-DO: don't let people enter colons on the main attn input- to prevent there being issues with the filter (eg. note:blah)
 
 window.testing_mode = true;
 jQuery.fx.off = true;
@@ -252,69 +253,84 @@ $(document).ready(function() {
 		actual = attn.filterPeriods('notes:""').length;
 		expected = 3;
 		equals(actual, expected);
-	});
+	}); */
 	
-	test("given a string like to:'July 20th', it should hide the periods that don't start pre-July 21st", function() {
-		var actual,
+	test("given a string like 'to:20.07.2011', it should hide the periods that don't start pre-July 21st", function() {
+		var $periods = $('#attnlist li ul li'),
+			actual,
 			expected;
-		actual = attn.filterPeriods('to:"July 22nd"').length;
-		expected = 5;
+		filterPeriods("#attnlist", 'to:10.12.2011');
+		actual = $periods.filter(":visible").length;
+		expected = 4;
 		equals(actual, expected);
-		actual = attn.filterPeriods('to:"July 20th"').length;
+		
+		filterPeriods("#attnlist", 'to:08.12.2011');
+		actual = $periods.filter(":visible").length;
 		expected = 2;
 		equals(actual, expected);
-		actual = attn.filterPeriods('to:"July 18th"').length;
+		
+		filterPeriods("#attnlist", 'to:07.12.2011');
+		actual = $periods.filter(":visible").length;
 		expected = 0;
 		equals(actual, expected);
-		actual = attn.filterPeriods('to:""').length;
-		expected = 6;
-		equals(actual, expected);
-		actual = attn.filterPeriods('to:').length;
+		
+		filterPeriods("#attnlist", 'to:');
+		actual = $periods.filter(":visible").length;
 		expected = 6;
 		equals(actual, expected);
 	});
 
-	test("given a string like from:'July 20th', it should hide the periods that don't start after July 19th", function() {
-		var actual,
+	test("given a string like 'from:20.07.2011', it should hide the periods that don't start after July 19th", function() {
+		var $periods = $('#attnlist li ul li'),
+			actual,
 			expected;
-		actual = attn.filterPeriods('from:"July 22nd"').length;
+		filterPeriods("#attnlist", 'from:12.12.2011');
+		actual = $periods.filter(":visible").length;
 		expected = 0;
 		equals(actual, expected);
-		actual = attn.filterPeriods('from:"July 20th"').length;
-		expected = 4;
-		equals(actual, expected);
-		actual = attn.filterPeriods('from:"July 18th"').length;
-		expected = 6;
-		equals(actual, expected);
-		actual = attn.filterPeriods('from:""').length;
-		expected = 6;
-		equals(actual, expected);
-		actual = attn.filterPeriods('from:').length;
-		expected = 6;
-		equals(actual, expected);
-	});
-	
-	test("given combinations of the filters, it should hide the periods that don't match all the filters", function() {
-		var actual,
-			expected;
-		actual = attn.filterPeriods('o from:"July 20th"').length;
-		expected = 4;
-		equals(actual, expected);
-		actual = attn.filterPeriods('to:"July 20th" from:"July 20th"').length;
-		expected = 1;
-		equals(actual, expected);
-		actual = attn.filterPeriods('yo notes:note').length;
-		expected = 1;
-		equals(actual, expected);
-		actual = attn.filterPeriods('yo from:"July 20th" to:"July 22nd"').length;
-		expected = 1;
-		equals(actual, expected);
-	});
-	
-	test("it should hide any days that have no periods", function() {
 		
+		filterPeriods("#attnlist", 'from:10.12.2011');
+		actual = $periods.filter(":visible").length;
+		expected = 4;
+		equals(actual, expected);
+		
+		filterPeriods("#attnlist", 'from:08.12.2011');
+		actual = $periods.filter(":visible").length;
+		expected = 6;
+		equals(actual, expected);
+		
+		filterPeriods("#attnlist", 'from:');
+		actual = $periods.filter(":visible").length;
+		expected = 6;
+		equals(actual, expected);
 	});
-	
+
+	test("given combinations of the filters, it should hide the periods that don't match all the filters", function() {
+		var $periods = $('#attnlist li ul li'),
+			actual,
+			expected;
+		filterPeriods("#attnlist", 'spot from:10.12.2011');
+		actual = $periods.filter(":visible").length;
+		expected = 3;
+		equals(actual, expected);
+		/*
+		filterPeriods("#attnlist", 'to:20.07.2011 from:20.07.2011');
+		actual = $periods.filter(":visible").length;
+		expected = 1;
+		equals(actual, expected);
+		
+		filterPeriods("#attnlist", 'yo notes:note');
+		actual = $periods.filter(":visible").length;
+		expected = 1;
+		equals(actual, expected);
+
+		filterPeriods("#attnlist", 'yo from:20.07.2011 to:22.07.2011');
+		actual = attn.filterPeriods('').length;
+		expected = 1;
+		equals(actual, expected);
+		*/
+	});
+	/*
 	test("it should show any days that have periods", function() {
 		
 	});
@@ -337,9 +353,11 @@ $(document).ready(function() {
 		equals(duration, expected);
 	});
 
-	test("it should display the average duration per day of all visible periods", function() {
+	test("it should display the average duration per week of all visible periods", function() {
+		// the test data is over four days, but only features three days with periods
 		var durationPerDay = averageDuration("#attnlist"),
-			expected = 37800 / 3;
+			numberOfWeeks = 4 / 7,
+			expected = 37800 / numberOfWeeks;
 		equals(durationPerDay, expected);
 	});
 	
