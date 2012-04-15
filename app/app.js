@@ -1,5 +1,6 @@
 /* 	TO-DO: don't use the iframe-comms2 thing if it's running off a local file 
 	TO-DO: de-duplicate the to: & from: filterString functions
+	TO-DO: deduplicate the screenPos & toggleButtons/hideButtons stuff from lines 44-45, 51-64, and 359-381, commit: ed6390b6e7f56cca79feff6f1909c669295b6eef
 
 */
 
