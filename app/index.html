@@ -3,11 +3,8 @@
 	<head>
 		<title>Attn!</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link rel="stylesheet" type="text/css" href="reset.css" />
-		<link rel="stylesheet" type="text/css" href="jbase.css" />
-		<link rel="stylesheet" type="text/css" href="grid.css" />
-		<link rel="stylesheet" type="text/css" href="stickyfooter.css" />
-		<link rel="stylesheet" type="text/css" media="all" href="restyle.css" />
+		<link rel="stylesheet" type="text/css" href="jbase2.css" />
+		<link rel="stylesheet" type="text/css" media="all" href="style-v3.css" />
 	</head>
 	<body>
 		<div id="header">
@@ -19,13 +16,11 @@
 			<div id="login" class="screen">
 				<form id="loginForm" method="post">
 					<h1>attn!</h1>
-					<div class="right">
-						<label for="loginID">Email</label>
-						<input id="loginID" name="loginID" type="text" />
-						<label for="password">Password</label>
-						<input id="password" name="password" type="password" />
-						<input class="right" type="submit" name="submitButton" value="Log in" />
-					</div>
+					<label for="loginID">email</label>
+					<input id="loginID" name="loginID" type="text" />
+					<label for="password">password</label>
+					<input id="password" name="password" type="password" />
+					<input class="right" type="submit" name="submitButton" value="Log in" />
 					<p>There was a problem with logging in, please try again</p>
 				</form>
 			</div>
@@ -45,11 +40,13 @@
 			</div>
 			<div id="analysis" class="screen">
 				<div class="jbasewrap container">
-					<input type="text" id="filterString" placeholder="type to filter&hellip;" />
-					<h2 id="totalSeconds">total attn! <span>0</span></h2>
-					<h2 id="averageSeconds">av. per week <span>0</span></h2>
+					<div id="head">
+						<input type="text" id="filterString" placeholder="type to filter&hellip;" />
+						<h2 id="totalSeconds"><span>0</span><br/>total attn</h2>
+						<h2 id="averageSeconds"><span>0</span><br/>average per week</h2>
+					</div>
 					<ul id="attnlist">
-						<li>Analysis here after loading&hellip;</li>
+						<li>loading attn&hellip;</li>
 					</ul>
 				</div>
 			</div>
