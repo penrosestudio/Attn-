@@ -1,6 +1,10 @@
 /* 	TO-DO: don't use the iframe-comms2 thing if it's running off a local file 
 	TO-DO: de-duplicate the to: & from: filterString functions
 	TO-DO: deduplicate the screenPos & toggleButtons/hideButtons stuff from lines 44-45, 51-64, and 359-381, commit: ed6390b6e7f56cca79feff6f1909c669295b6eef
+	TO-DO: make the dates displayed in the analysis view go dd.mm.yy
+	TO-DO: make the sync img appear when sync is happening on the input screen
+	TO-DO: make the sync img appear when you have typed on the analysis screen
+	TO-DO: check why there is an extra blank screen after team analysis on the attn-test site
 
 */
 
