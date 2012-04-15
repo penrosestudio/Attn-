@@ -337,22 +337,22 @@ $(document).ready(function() {
 
 	module("getHelperText");
 
-	test("given a command of '', actionHelperText should be null and infoHelperText should be 'Type'", function() {
+	test("given a command of '', actionHelperText should be attn! and infoHelperText should be 'Type'", function() {
 		var command = "",
 			actual = attn.getHelperText(attn.parseCommand(command)),
 			expected = {
 				actionHelperText: null,
-				infoHelperText: "Type"
+				infoHelperText: "attn!"
 			};
 		deepEqual(actual,expected);
 	});
 	
-	test("given a command of 'proj', aHT should be 'Switch to 'proj' now' and iHT should be null", function() {
+	test("given a command of 'proj', aHT should be 'Switch to 'proj' now' and iHT should be attn!", function() {
 		var command = "proj",
 			actual = attn.getHelperText(attn.parseCommand(command)),
 			expected = {
 				actionHelperText: "Switch to 'proj' now",
-				infoHelperText: null
+				infoHelperText: "attn!"
 			};
 		deepEqual(actual,expected);
 	});
@@ -390,27 +390,27 @@ $(document).ready(function() {
 		deepEqual(actual,expected);
 	});
 	
-	test("given a command of 'project -4', aHT should be 'Switch to 'project' 4 minutes ago' and iHT should be null", function() {
+	test("given a command of 'project -4', aHT should be 'Switch to 'project' 4 minutes ago' and iHT should be attn!", function() {
 		var command = "project -4",
 			actual = attn.getHelperText(attn.parseCommand(command)),
 			expected = {
 				actionHelperText: "Switch to 'project' 4 minutes ago",
-				infoHelperText: null
+				infoHelperText: "attn!"
 			};
 		deepEqual(actual,expected);
 	});
 	
-	test("given a command of 'project 4', aHT should be 'Switch to 'project' in 4 minutes' and iHT should be null", function() {
+	test("given a command of 'project 4', aHT should be 'Switch to 'project' in 4 minutes' and iHT should be attn!", function() {
 		var command = "project 4",
 			actual = attn.getHelperText(attn.parseCommand(command)),
 			expected = {
 				actionHelperText: "Switch to 'project' in 4 minutes",
-				infoHelperText: null
+				infoHelperText: "attn!"
 			};
 		deepEqual(actual,expected);
 	});
 	
-	test("given a command of 'project 12:00 yesterday', aHT should be 'Switch to 'project' at <yesterday's datetime>' and iHT should be null", function() {
+	test("given a command of 'project 12:00 yesterday', aHT should be 'Switch to 'project' at <yesterday's datetime>' and iHT should be attn!", function() {
 		var command = "project 12:00 yesterday",
 			actual = attn.getHelperText(attn.parseCommand(command)),
 			expected = {
@@ -419,18 +419,18 @@ $(document).ready(function() {
 					minute: 00,
 					second: 00
 				}).toString(),
-				infoHelperText: null
+				infoHelperText: "attn!"
 			};
 		deepEqual(actual,expected);
 	});
 	
-	test("given a command of 'project HH:mm', where 'HH:mm' is less than a minute in the past, aHT should be 'Switch to 'project' 1 minute ago' and iHT should be null", function() {
+	test("given a command of 'project HH:mm', where 'HH:mm' is less than a minute in the past, aHT should be 'Switch to 'project' 1 minute ago' and iHT should be attn!", function() {
 		var time = (new Date).toString("HH:mm"),
 			command = "project "+time,
 			actual = attn.getHelperText(attn.parseCommand(command)),
 			expected = {
 				actionHelperText: "Switch to 'project' 1 minute ago",
-				infoHelperText: null
+				infoHelperText: "attn!"
 			};
 		deepEqual(actual,expected);
 	});

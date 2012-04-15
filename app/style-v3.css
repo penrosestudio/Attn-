@@ -8,6 +8,9 @@
 
 */
 
+iframe {
+	display: none;
+}
 
 
 body {
@@ -18,6 +21,7 @@ body {
 	width: 100%;
 	overflow: hidden;
 	letter-spacing: 0.08em;
+	margin: 0px;
 }
 
 
@@ -282,7 +286,8 @@ textarea#notes {
 img#sync {
 	position: absolute;
 	right: -30px;
-	top: 110px;
+	top: 115px;
+	display: none;
 }
 
 input#save {
@@ -329,6 +334,7 @@ input#save:hover {
 #head h2 {
 	font-size: 14px;
 	font-family: interstate-regular;
+	font-weight: normal;
 	text-align: left;
 	float: left;
 	margin: 33px 40px 0px 0px;
@@ -338,7 +344,7 @@ input#save:hover {
 	font-size: 38px;
 	font-family: interstate-bold;
 	display: block;
-	margin-bottom: -28px;
+	margin-bottom: -10px;
 }
 
 

@@ -142,14 +142,14 @@ var debug = false,
 		getHelperText: function(parsed) {
 			log('gHT',parsed);
 			var aHT = null,
-				iHT = null,
+				iHT = "attn!",
 				tags,
 				error,
 				time,
 				now = attn.now,
 				minDiff;
 			if(!parsed) {
-				iHT = "Type";
+				iHT = "attn!";
 			} else {
 				tags = parsed.tags;
 				error = parsed.error;
