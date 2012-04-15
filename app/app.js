@@ -19,6 +19,7 @@ var command,
 	hostIfLocal,
 	viewportWidth = $(window).width(),
 	viewportHeight = $(window).height(),
+	/*
 	toggleButtons = function() {
 		var currentLeft = parseInt($('#wrapper').css('left'),10),
 			frame = -(currentLeft / viewportWidth);
@@ -38,12 +39,28 @@ var command,
 			}
 		});
 	},
+	*/
+	screenPos = 1,
+	screens	  = $("#wrapper div.screen").length,
 	load;
 if(document.location.protocol.indexOf("file") === 0) {
 	host = "http://tiddlyspace.com";
 	hostIfLocal = host;
 }
-	
+function hideButtons() {
+	if (screenPos === 1) {
+		$('button.left').hide();
+	}
+	if (screenPos < screens) {
+		$('button.right').show();
+	}
+	if (screenPos === screens) {
+			$('button.right').hide();
+		}
+	if (screenPos > 1) {
+		$('button.left').show();
+	}
+};
 
 $(document).bind("AttnEventPending", function(e, attnEvent) {
 	var helperText = attn.getHelperText(attnEvent);
@@ -271,7 +288,8 @@ $(document).ready(function() {
 			//	return false;
 			//});
 			$('#wrapper').css('left',-viewportWidth);
-			toggleButtons();
+			/* toggleButtons(); */
+			hideButtons();
 			$('.screen').show();
 			init();
 		}, function() {
@@ -296,7 +314,8 @@ $(document).ready(function() {
 				}
 				return false;
 			});
-			toggleButtons();
+			/* toggleButtons(); */
+			hideButtons();
 			$('.screen').show();
 		}, hostIfLocal);
 	};
@@ -309,13 +328,58 @@ $(document).ready(function() {
 	$('#attn').val("");
 	$('#notes').hide().text("");
 	
+	
+	/*
 	$('button').click(function() {
-		var direction = $(this).text()==="left" ? "+=" : "-=";
+		var direction = $(this).hasClass("left") ? "+=" : "-=";
 		$('#wrapper:not(animated)').animate({
 			'left': direction+viewportWidth
 		}, toggleButtons);
 		return false;
 	});
+	
+	*/
+	
+	// position = zero
+	// screens = count the instances of .screen 
+	
+	// press left, 
+	// if we are not at zero
+		// animate one screen width left
+		// minus one from position
+	// press right 
+	// if position < screens
+		// animate one screen width right
+		// add one to position
+	
+	
+	
+	
+	$('button.left').click(function() {
+		var direction = "+=";
+		if (screenPos > 1) {
+			$('#wrapper:not(animated)').animate({
+				'left': direction+viewportWidth
+			});
+			screenPos = screenPos-1;
+			hideButtons();
+		}
+		return false;
+	});
+	
+	$('button.right').click(function() {
+		var direction = "-=";
+		if (screenPos < screens) {
+			$('#wrapper:not(animated)').animate({
+				'left': direction+viewportWidth
+			});
+			screenPos = screenPos+1;
+			hideButtons();
+		}
+		return false;
+	});
+	
+	
 	
 	// trigger a save if notes are typed and there is a pause of two seconds
 	$('#notes').live("keyup", function() {
