@@ -1,9 +1,7 @@
 /* Attn! Team project graphs
 
+v0.2 - supports multiple projects and the checkpoint dates
 v0.1 - assume just one project
-
-Main TO-DOs:
-- support the last billed field
 
 Jonathan Lister - jonathan@withjandj.com
 October 20, 2012
