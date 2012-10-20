@@ -10,6 +10,12 @@ October 20, 2012
 
 */
 
+if(!('console' in window)) {
+	console = {
+		log: function() {}
+	};
+}
+
 var host = window.location.protocol+"//tiddlyspace.com",
 	load = function() {
 		attn.checkStatus(function(data) {
@@ -47,6 +53,7 @@ var host = window.location.protocol+"//tiddlyspace.com",
 			};
 		settings.projectDurations = {};
 		$.each(settings.team, function(i, username) {
+			// TO-DO: use earliestDate to limit search
 			var searchString = "/search?q=bag:attn_"+username+"_*%20_limit:1000&sort=-title", // silly limit since there is no 'return all' and limit defaults to 20; we're using 1000 as we only want to look about two months back
 				url = searchString;
 			$.ajax({
@@ -144,6 +151,7 @@ var host = window.location.protocol+"//tiddlyspace.com",
 		return durBits.join(":");
 	},
 	rebuildProjectObjectFromInputs = function() {
+		// refresh the object tracking the project configuration, by looking at the HTML
 		var projects = [],
 			projectsByName = {};
 		$('input').each(function(i, elem) {
@@ -173,7 +181,23 @@ var host = window.location.protocol+"//tiddlyspace.com",
 		});
 		settings.projectsByName = projectsByName;
 	},
+	createProjectElement = function(i) {
+		var id = 'project_'+i;
+		return '<div class="project" id="'+id+'"> \
+			<label for="project_name_'+i+'">name</label> \
+			<input name="project_name_'+i+'" id="project_name_'+i+'"> \
+			<label for="project_target_'+i+'">target (hours)</label> \
+			<input name="project_target_'+i+'" id="project_target_'+i+'"> \
+			<label for="project_date_'+i+'">last billed</label> \
+			<input name="project_date_'+i+'" id="project_date_'+i+'"> \
+			<span class="project_graph"> \
+				<span></span> \
+			</span> \
+			<span class="graph_label"></span> \
+		</div>';
+	},
 	readURLParams = function() { // TO-DO: include team list
+		// read the project configuration from the URL hash, create and populate the HTML for those projects
 		var params = window.location.hash.slice(1).split('&');
 		if(!params) {
 			return;
@@ -181,10 +205,14 @@ var host = window.location.protocol+"//tiddlyspace.com",
 		$.each(params, function(i, param) {
 			var bits = param.split('='),
 				key = bits[0],
-				value = decodeURIComponent(bits[1]);
+				value = decodeURIComponent(bits[1]),
+				id = key[key.length-1];
+			if(!$('#project_'+id).length) {
+				var html = createProjectElement(id);
+				$('#projects').append(html);
+			}
 			$('#'+key).val(value);
 		});
-		rebuildProjectObjectFromInputs();
 	},
 	setURLParams = function() { // TO-DO: include team list
 		var list = [];
@@ -214,6 +242,10 @@ var host = window.location.protocol+"//tiddlyspace.com",
 
 $(document).ready(function() {
 	readURLParams();
+	rebuildProjectObjectFromInputs();
+	if(settings.projects.length>1) {
+		$('button').text($('button').text().replace('project', 'projects'));
+	}
 	// we're waiting for the iframe-comms to catch up
 	$(document).bind('crossDomainAjaxLoaded', load);
 });
