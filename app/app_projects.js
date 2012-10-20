@@ -182,19 +182,20 @@ var host = window.location.protocol+"//tiddlyspace.com",
 		settings.projectsByName = projectsByName;
 	},
 	createProjectElement = function(i) {
-		var id = 'project_'+i;
-		return '<div class="project" id="'+id+'"> \
-			<label for="project_name_'+i+'">name</label> \
-			<input name="project_name_'+i+'" id="project_name_'+i+'"> \
-			<label for="project_target_'+i+'">target (hours)</label> \
-			<input name="project_target_'+i+'" id="project_target_'+i+'"> \
-			<label for="project_date_'+i+'">last billed</label> \
-			<input name="project_date_'+i+'" id="project_date_'+i+'"> \
-			<span class="project_graph"> \
-				<span></span> \
-			</span> \
-			<span class="graph_label"></span> \
-		</div>';
+		var id = 'project_'+i,
+			html = '<div class="project" id="'+id+'"> \
+				<label for="project_name_'+i+'">name</label> \
+				<input name="project_name_'+i+'" id="project_name_'+i+'"> \
+				<label for="project_target_'+i+'">target (hours)</label> \
+				<input name="project_target_'+i+'" id="project_target_'+i+'"> \
+				<label for="project_date_'+i+'">last billed</label> \
+				<input name="project_date_'+i+'" id="project_date_'+i+'"> \
+				<span class="project_graph"> \
+					<span></span> \
+				</span> \
+				<span class="graph_label"></span> \
+			</div>';
+		$('#projects').append(html);
 	},
 	readURLParams = function() { // TO-DO: include team list
 		// read the project configuration from the URL hash, create and populate the HTML for those projects
@@ -208,8 +209,7 @@ var host = window.location.protocol+"//tiddlyspace.com",
 				value = decodeURIComponent(bits[1]),
 				id = key[key.length-1];
 			if(!$('#project_'+id).length) {
-				var html = createProjectElement(id);
-				$('#projects').append(html);
+				createProjectElement(id);
 			}
 			$('#'+key).val(value);
 		});
@@ -228,7 +228,7 @@ var host = window.location.protocol+"//tiddlyspace.com",
 	init = function() {
 		settings.team = getTeamList();
 		settings.earliestDate = (2).months().ago(); // TO-DO: make this the earliest of the checkpoint dates
-		$('button').click(function() {
+		$('#analyse').click(function() {
 			var username = attn.settings.username;
 			rebuildProjectObjectFromInputs();
 			setURLParams();
@@ -238,13 +238,20 @@ var host = window.location.protocol+"//tiddlyspace.com",
 				updateGraphs();
 			});
 		});
+		$('#add_project').click(function() {
+			var i = settings.projects.length;
+			console.log(i);
+			createProjectElement(i);
+		});
 	};
 
 $(document).ready(function() {
 	readURLParams();
 	rebuildProjectObjectFromInputs();
 	if(settings.projects.length>1) {
-		$('button').text($('button').text().replace('project', 'projects'));
+		var $analyseButton = $('#analyse'),
+			analyseText = $analyseButton.text();
+		$analyseButton.text(analyseText.replace('project', 'projects'));
 	}
 	// we're waiting for the iframe-comms to catch up
 	$(document).bind('crossDomainAjaxLoaded', load);
