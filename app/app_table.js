@@ -45,6 +45,11 @@ var host = window.location.protocol+"//tiddlyspace.com",
 			}
 		});
 	},
+	updateTimeSpan = function(periods, then, now) {
+		$.each(periods, function(i, period)) {
+			// if project.startTime etc.
+		}
+	},
 	prettifyDuration = function(duration) {
 		var durationObj = attn.formatDuration(duration),
 			hours = durationObj.hours,
@@ -101,10 +106,17 @@ $(document).ready(function() {
 	// we're waiting for the iframe-comms to catch up
 	$(document).bind('crossDomainAjaxLoaded', load);
 	$('button').click(function() {
-		var username = $(this).val();
-		getEvents(function(periods) {
-			updatePeople(periods, username);
+		if(this.name==="person") {
+			var username = $(this).val();
+			getEvents(function(periods) {
+				updatePeople(periods, username);
+				redrawTable();
+			}, host, username);
+		} else if(this.name==="timeSpan") {
+			var then = Date.parse('last Monday'),
+				now = then.add(7).days();
+			updateTimeSpan(periods,then,now);
 			redrawTable();
-		}, host, username);
+		}
 	});
 });

@@ -1,0 +1,19 @@
+#wrapper {
+	width: 600px;
+	margin: auto;
+}
+
+.project {
+	width: 500px;
+}
+
+.project .project_graph {
+	display: inline-block;
+	height: 40px;
+	width: 200px;
+}
+
+.project.project_graph {
+	display: inline-block;
+	width: 0; /* set to the correct width as percentages are calculated */
+}

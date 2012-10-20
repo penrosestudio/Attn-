@@ -7,15 +7,24 @@
 		<link rel="stylesheet" type="text/css" href="jbase.css" />
 		<link rel="stylesheet" type="text/css" href="grid.css" />
 		<link rel="stylesheet" type="text/css" href="stickyfooter.css" />
-		<link rel="stylesheet" type="text/css" media="all" href="table_style.css" />
+		<link rel="stylesheet" type="text/css" media="all" href="projects_style.css" />
 	</head>
 	<body>
 		<div id="wrapper">
-			<table>
-			</table>
-			<button name="person" value="joshuwar">add joshuwar</button>
-			<button name="person" value="jnthnlstr">add jnthnlstr</button>
-			<button name="timeSpan" value="lastWeek">reload as last week</button>
+			<textarea id="team_list"></textarea>
+			<div class="project" id="project_0">
+				<label for="project_name_0">name</label>
+				<input name="project_name_0" id="project_name_0">
+				<label for="project_target_0">target</label>
+				<input name="project_target_0" id="project_target_0">
+				<label for="project_date_0">last billed</label>
+				<input name="project_date_0" id="project_date_0">
+				<span class="project_graph">
+					<span></span>
+				</span>
+				<span class="graph_label"></span>
+			</div>
+			<button name="analyse_project" value="go">analyse project</button>
 		</div><!-- end #wrapper -->
 		<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
 		<script type="text/javascript" src="date-en-GB.js"></script>
@@ -24,6 +33,6 @@
 		<script type="text/javascript" src="iframe-comms.js"></script>
 		<script type="text/javascript" src="templ.js"></script>
 		<script type="text/javascript" src="attn.js"></script>
-		<script type="text/javascript" src="app_table.js"></script>
+		<script type="text/javascript" src="app_projects.js"></script>
 	</body>
 </html>

@@ -71,22 +71,16 @@ $(document).bind("AttnEventPending", function(e, attnEvent) {
 	var helperText = attn.getHelperText(attnEvent);
 	updateAction(helperText.actionHelperText);
 	updateInfo(helperText.infoHelperText);
-});
-
-$(document).bind("AttnEventCreated", function(e, attnEvent) {
+}).bind("AttnEventCreated", function(e, attnEvent) {
 	updateAction();
 	updateInfo("attn event created! saving...");
 	attn.saveEvent(attnEvent,host);
-});
-
-$(document).bind("AttnEventSaved", function(e, attnEvent) {
+}).bind("AttnEventSaved", function(e, attnEvent) {
 	updateAction();
 	updateInfo("attn event saved!");
 	attn.addEvent(attnEvent);
 	updateAnalysis(attn.attnEvents);
-});
-
-$(document).bind("AttnEventSaveError", function(e, attnEvent) {
+}).bind("AttnEventSaveError", function(e, attnEvent) {
 	updateAction();
 	updateInfo("oh oh! error saving");
 });
@@ -228,8 +222,6 @@ function totalDuration(periodsList) {
 	return seconds;
 }
 
-
-
 function updateAnalysis(events) {
 	var i,
 		attnday_templ = tmpl("attnday_templ"),
@@ -273,10 +265,21 @@ function updateAnalysis(events) {
 	clearFilterString();
 }
 
+function updateOpenNotice() {
+	var periods = attn.attnPeriods,
+		mostRecentPeriod = periods[periods.length-1];
+	if(!mostRecentPeriod.end) {
+		$('#openPeriodNotice').text('Watch out! You have an open period: '+mostRecentPeriod.project+' '+mostRecentPeriod.starttime);
+		$(document).one(attn.attnEventCreated, function() {
+			$('#openPeriodNotice').text('');	
+		});
+	}
+}
+
 function init() {
 	attn.getEvents(function(tiddlers) {
 		updateAnalysis(tiddlers);
-		
+		updateOpenNotice();
 	}, host);
 	$('#attn').attn().keyup();
 }

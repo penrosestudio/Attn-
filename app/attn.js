@@ -284,9 +284,25 @@ var debug = false,
 				}
 			});
 		},
+		getUsername: function() {
+			var param = "username",
+				regexS,
+				regex,
+				results;
+			param = param.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+			regexS = "[\\?&]" + param + "=([^&#]*)";
+			regex = new RegExp(regexS);
+			results = regex.exec(window.location.search);
+			if(!results) {
+				return attn.settings.username;			
+			} else {
+				return decodeURIComponent(results[1].replace(/\+/g, " "));
+			}
+		},
 		getEvents: function(callback,host) {
-			var username = attn.settings.username,
-				searchString = "/search?q=bag:attn_"+username+"_*%20_limit:999999&fat=1&sort=-title", // silly limit since there is no 'return all' and limit defaults to 20
+			var username = attn.getUsername(),
+				//searchString = "/search?q=bag:attn_"+username+"_*%20_limit:999999&fat=1&sort=-title", // silly limit since there is no 'return all' and limit defaults to 20
+				searchString = "/search?q=bag:attn_"+username+"_*%20_limit:999999&fat=1&sort=-title",
 				url = searchString,
 				stripTiddlers = function(tiddlers) {
 					tiddlers = tiddlers || [];
@@ -517,3 +533,20 @@ if(document.location.protocol.indexOf("file")!==-1) {
 		};
 	}
 }
+
+/* some utility functions for getting the info out as CSV
+
+var ps = [];
+for (var i in attn.attnPeriods) {
+	var p = attn.attnPeriods[i],
+		s = dateToFormat(p.startDate)+"\t"+dateToFormat(p.endDate)+"\t"+p.project;
+	ps.push(s);
+}
+ps.reverse().join("\n");
+
+function dateToFormat(d) {
+	if(!d) { return ""; }
+	return (d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear()+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+}
+
+*/
