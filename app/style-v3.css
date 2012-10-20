@@ -281,6 +281,8 @@ textarea#notes {
 	color: #555;
 	padding: 10px;
 	border: none;
+	font-size: 13px;
+	line-height: 18px;
 }
 
 img#sync {
@@ -294,6 +296,7 @@ input#save {
     bottom: 0px;
 	float: right;
 	margin-top: 10px;
+	display: none;
 }
 
 input#save:hover {
@@ -386,7 +389,7 @@ input#save:hover {
 }
 
 .project {
-	width: 88px;
+	width: 108px;
 	padding: 1px 0px 0px 2px;
 	font-family: interstate-bold;
 }
@@ -397,7 +400,7 @@ input#save:hover {
 }
 
 .notes {
-	width: 354px;
+	width: 334px;
 	padding-top: 1px;
 }
 
