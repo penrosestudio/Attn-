@@ -24,6 +24,7 @@ var host = window.location.protocol+"//tiddlyspace.com",
 		team: [], // for the list of team members
 		earliestDate: null, // the earliest we'll go back
 		projects: [], // structure: { name: "", checkpoint: Date, target: 0 }
+		projectsByName: {}, // projects array indexed by name
 		projectDurations: {} // structure: name: { <username>: 0, total: 0 }
 	},
 	getTeamList = function() { // TO-DO: make not hard-coded
@@ -40,7 +41,6 @@ var host = window.location.protocol+"//tiddlyspace.com",
 					periods = attn.createPeriods(attnTiddlers);
 				attn.attnEvents = attnTiddlers;
 				createProjectsFromPeriods(periods, username);
-				console.log(count,teamCount);
 				if(count>=teamCount) {
 					finalCallback();
 				}
@@ -65,10 +65,26 @@ var host = window.location.protocol+"//tiddlyspace.com",
 	},
 	createProjectsFromPeriods = function(periods, username) {
 		var projectDurations = settings.projectDurations,
+			projectsByName = settings.projectsByName,
 			total;
 		$.each(periods, function(i, period) {
 			var project = period.project.toLowerCase(),
-				duration = period.duration;
+				duration = period.duration,
+				startDate = period.startDate,
+				projectConfig = projectsByName[project],
+				checkpointDate;
+			// discard this period if it is not one of the ones we are looking for
+			// or if it starts too late
+			if(!projectConfig) {
+				return true;
+			}
+			checkpointDate = projectConfig.date;
+			if(checkpointDate) {
+				checkpointDate = Date.parse(checkpointDate);
+				if(startDate < checkpointDate) {
+					return true;
+				}
+			}
 			if(!projectDurations[project]) {
 				projectDurations[project] = {};
 			}
@@ -101,7 +117,6 @@ var host = window.location.protocol+"//tiddlyspace.com",
 				$graphLabel = $project.find('.graph_label'),
 				graphWidth = $graph.width(),
 				width = Math.round(proportion*graphWidth)+'px';
-			console.log(duration, prettyDuration, target, prettyTarget);
 			$bar.css('backgroundColor', colors[i])
 				.width(width);
 			$graphLabel.text(prettyDuration+' / '+prettyTarget+' ('+percentage+'%)');
@@ -129,7 +144,8 @@ var host = window.location.protocol+"//tiddlyspace.com",
 		return durBits.join(":");
 	},
 	rebuildProjectObjectFromInputs = function() {
-		var projects = [];
+		var projects = [],
+			projectsByName = {};
 		$('input').each(function(i, elem) {
 			var $elem = $(elem),
 				key = $elem.attr('name'),
@@ -149,6 +165,13 @@ var host = window.location.protocol+"//tiddlyspace.com",
 			projects[id][key] = value;
 		});
 		settings.projects = projects;
+		$.each(projects, function(i, project) {
+			var name = project.name;
+			if(!projectsByName[name]) {
+				projectsByName[name] = project;
+			}
+		});
+		settings.projectsByName = projectsByName;
 	},
 	readURLParams = function() { // TO-DO: include team list
 		var params = window.location.hash.slice(1).split('&');
