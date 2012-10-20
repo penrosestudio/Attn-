@@ -4,16 +4,19 @@
 }
 
 .project {
-	width: 500px;
+
 }
 
 .project .project_graph {
 	display: inline-block;
 	height: 40px;
 	width: 200px;
+	background-color: #ddd;
+	border: 1px solid #999;
 }
 
-.project.project_graph {
+.project .project_graph span {
 	display: inline-block;
+	height: 30px;
 	width: 0; /* set to the correct width as percentages are calculated */
 }
