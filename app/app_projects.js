@@ -94,9 +94,13 @@ var host = window.location.protocol+"//tiddlyspace.com",
 				projectDurations[project] = {};
 			}
 			if(!projectDurations[project][username]) {
-				projectDurations[project][username] = 0;
+				projectDurations[project][username] = {
+					periods: [],
+					total: 0
+				};
 			}
-			projectDurations[project][username] += duration;
+			projectDurations[project][username].periods.push(period);
+			projectDurations[project][username].total += duration;
 			if(!projectDurations[project].total) {
 				projectDurations[project].total = 0;
 			}
@@ -135,7 +139,7 @@ var host = window.location.protocol+"//tiddlyspace.com",
 			var name = project.name;
 			projectHtml.push('<h3>'+name+'</h3><ul>');
 			$.each(settings.team, function(i, person) {
-				var total = projectDurations[name][person];
+				var total = projectDurations[name][person].total;
 				projectHtml.push('<li>'+person+': '+prettifyDuration(total)+'</li>');
 			});
 			projectHtml.push('</ul>');
@@ -201,10 +205,17 @@ var host = window.location.protocol+"//tiddlyspace.com",
 					return {
 						"name": name,
 						"children": $.map(settings.team, function(person, i) {
-							var totalMs = projectDurations[name][person];
+							var personPeriods = projectDurations[name][person];
 							return {
 								"name": person,
-								"size": totalMs/timeDivisor
+								"children": $.map(personPeriods.periods, function(period, j) {
+									var totalMs = period.duration;
+									return {
+										"name": prettifyDuration(totalMs),
+										"size": totalMs/timeDivisor
+									}
+								})
+								
 							}
 						})
 					}
@@ -224,15 +235,7 @@ var host = window.location.protocol+"//tiddlyspace.com",
 			    .range([0, 2 * Math.PI]),
 			y = d3.scale.linear()
 			    .range([0, radius]),
-			color = function() {
-				var c = d3.scale.category20c();
-				return function() {
-					console.log(arguments);
-					var cc = c.apply(this, arguments);
-					console.log(cc);
-					return cc;
-				}
-			}(),
+			color = d3.scale.category20c(),
 			click = function(d) {
 				path.transition()
 				  .duration(duration)
