@@ -209,7 +209,7 @@ var host = window.location.protocol+"//tiddlyspace.com",
 						"name": person,
 						"size": total/timeDivisor
 					};
-				});
+				})
 			});
 		});
 		return json;
