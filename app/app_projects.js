@@ -132,9 +132,10 @@ var host = window.location.protocol+"//tiddlyspace.com",
 			projectDurations = settings.projectDurations,
 			projectHtml = [];
 		$.each(projects, function(i, project) {
-			var name = project.name,
-				projectHtml.push('<h3>'+name+'</h3><ul>');
-			$.each(projectDurations[name], function(person, total) {
+			var name = project.name;
+			projectHtml.push('<h3>'+name+'</h3><ul>');
+			$.each(settings.team, function(i, person) {
+				var total = projectDurations[name][person];
 				projectHtml.push('<li>'+person+': '+prettifyDuration(total)+'</li>');
 			});
 			projectHtml.push('</ul>');
