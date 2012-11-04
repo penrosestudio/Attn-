@@ -224,7 +224,15 @@ var host = window.location.protocol+"//tiddlyspace.com",
 			    .range([0, 2 * Math.PI]),
 			y = d3.scale.linear()
 			    .range([0, radius]),
-			color = d3.scale.category20c(),
+			color = function() {
+				var c = d3.scale.category20c();
+				return function() {
+					console.log(arguments);
+					var cc = c.apply(this, arguments);
+					console.log(cc);
+					return cc;
+				}
+			}(),
 			click = function(d) {
 				path.transition()
 				  .duration(duration)
@@ -304,8 +312,9 @@ var host = window.location.protocol+"//tiddlyspace.com",
 			path = vis.selectAll("path").data(nodes)
 				.enter().append("path")
 				.attr("d", arc)
-				.style("fill", function(d) { return d.depth ? color((d.children ? d : d.parent).name) : "#FFF"; })
-					.on("click", click),
+				.style("fill", function(d) {
+					return d.depth ? color((d.children ? d : d.parent).name) : "#FFF";
+				}).on("click", click),
 			text = vis.selectAll("text").data(nodes),
 			textEnter = text.enter().append("text")
 				.style("fill-opacity", function(d) {
