@@ -193,25 +193,24 @@ var host = window.location.protocol+"//tiddlyspace.com",
 			}]
 		}
 		*/
-		var json = {
+		var projectDurations = settings.projectDurations,
+			timeDivisor = 1000 * 60 * 60, // to convert from ms to hours
+			json = {
 				"name": "all",
-				"children": []
-			},
-			ps = json.children,
-			projectDurations = settings.projectDurations,
-			timeDivisor = 1000 * 60 * 60; // to convert from ms to hours
-		$.each(settings.projectsByName, function(name, project) {
-			project = projectDurations[name];
-			ps.push({
-				"name": name,
-				"children": $.map(project, function(personTotal, person) {
+				"children": $.map(settings.projectsByName, function(project, name) {				
 					return {
-						"name": person,
-						"size": total/timeDivisor
-					};
+						"name": name,
+						"children": $.map(settings.team, function(person, i) {
+							var totalMs = projectDurations[name][person];
+							return {
+								"name": person,
+								"size": totalMs/timeDivisor
+							}
+						})
+					}
 				})
-			});
-		});
+			};
+		console.log('json',json);
 		return json;
 	},
 	drawSunburst = function() {
@@ -420,6 +419,7 @@ var host = window.location.protocol+"//tiddlyspace.com",
 				console.log(settings.projectDurations);
 				updateGraphs();
 				updateSummaryTable();
+				drawSunburst();
 			});
 		});
 		$('#add_project').click(function() {
