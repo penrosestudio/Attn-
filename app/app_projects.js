@@ -225,49 +225,6 @@ var host = window.location.protocol+"//tiddlyspace.com",
 			y = d3.scale.linear()
 			    .range([0, radius]),
 			color = d3.scale.category20c(),
-			vis = d3.select("#sunburst").append("svg")
-			    .attr("width", width)
-			    .attr("height", height)
-					.append("g")
-				    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")"),
-			partition = d3.layout.partition()
-			    .value(function(d) { return d.size; }),
-			arc = d3.svg.arc()
-			    .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
-			    .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx))); })
-			    .innerRadius(function(d) { return Math.max(0, y(d.y)); })
-			    .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); }),
-			nodes = partition.nodes(json),
-			path = vis.selectAll("path").data(nodes)
-				.enter().append("path")
-				.attr("d", arc)
-				.style("fill", function(d) { return d.depth ? color((d.children ? d : d.parent).name) : "#FFF"; })
-					.on("click", click),
-			text = vis.selectAll("text").data(nodes),
-			textEnter = text.enter().append("text")
-				.style("fill-opacity", function(d) {
-					return 2/(d.depth+1);
-				})
-				.style("font-size", function(d) {
-					return 2/(d.depth+1)+"em";
-				})
-				.style("fill", function(d) {
-					return brightness(color((d.children ? d : d.parent).name)) < 125 ? "#eee" : "#000";
-				})
-				.attr("text-anchor", function(d) {
-					return x(d.x + d.dx / 2) > Math.PI ? "end" : "start";
-				})
-				.attr("dy", ".2em")
-				.attr("transform", function(d) {
-					var multiline = (d.name || "").split(" ").length > 1,
-					angle = x(d.x + d.dx / 2) * 180 / Math.PI - 90,
-					rotate = angle + (multiline ? -.5 : 0);
-					return "rotate(" + rotate + ")translate(" + (y(d.y) + p) + ")rotate(" + (angle > 90 ? -180 : 0) + ")";
-				})
-				.on("click", click)
-				.append("tspan")
-					.attr("x", 0)
-					.text(function(d) { return d.depth ? d.name : ""; }),
 			click = function(d) {
 				path.transition()
 				  .duration(duration)
@@ -316,7 +273,7 @@ var host = window.location.protocol+"//tiddlyspace.com",
 				}
 				return false;
 			},
-			colour = function(d) {
+			colour = function(d) { // is this supposed to be used?
 				if (d.children) {
 					// There is a maximum of two children!
 					var colours = d.children.map(colour),
@@ -330,7 +287,52 @@ var host = window.location.protocol+"//tiddlyspace.com",
 			brightness = function(rgb) {
 				// http://www.w3.org/WAI/ER/WD-AERT/#color-contrast
 				return rgb.r * .299 + rgb.g * .587 + rgb.b * .114;
-			};
+			},
+			vis = d3.select("#sunburst").append("svg")
+			    .attr("width", width)
+			    .attr("height", height)
+					.append("g")
+				    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")"),
+			partition = d3.layout.partition()
+			    .value(function(d) { return d.size; }),
+			arc = d3.svg.arc()
+			    .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
+			    .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx))); })
+			    .innerRadius(function(d) { return Math.max(0, y(d.y)); })
+			    .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); }),
+			nodes = partition.nodes(json),
+			path = vis.selectAll("path").data(nodes)
+				.enter().append("path")
+				.attr("d", arc)
+				.style("fill", function(d) { return d.depth ? color((d.children ? d : d.parent).name) : "#FFF"; })
+					.on("click", click),
+			text = vis.selectAll("text").data(nodes),
+			textEnter = text.enter().append("text")
+				.style("fill-opacity", function(d) {
+					return 2/(d.depth+1);
+				})
+				.style("font-size", function(d) {
+					return 2/(d.depth+1)+"em";
+				})
+				.style("fill", function(d) {
+					return brightness(
+						color((d.children ? d : d.parent).name)
+					) < 125 ? "#eee" : "#000";
+				})
+				.attr("text-anchor", function(d) {
+					return x(d.x + d.dx / 2) > Math.PI ? "end" : "start";
+				})
+				.attr("dy", ".2em")
+				.attr("transform", function(d) {
+					var multiline = (d.name || "").split(" ").length > 1,
+					angle = x(d.x + d.dx / 2) * 180 / Math.PI - 90,
+					rotate = angle + (multiline ? -.5 : 0);
+					return "rotate(" + rotate + ")translate(" + (y(d.y) + p) + ")rotate(" + (angle > 90 ? -180 : 0) + ")";
+				})
+				.on("click", click)
+				.append("tspan")
+					.attr("x", 0)
+					.text(function(d) { return d.depth ? d.name : ""; });
 	},
 	rebuildProjectObjectFromInputs = function() {
 		// refresh the object tracking the project configuration, by looking at the HTML
