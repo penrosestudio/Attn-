@@ -127,6 +127,20 @@ var host = window.location.protocol+"//tiddlyspace.com",
 			$graphLabel.text(prettyDuration+' / '+prettyTarget+' ('+percentage+'%)');
 		});
 	},
+	updateSummaryTable = function() {
+		var projects = settings.projects,
+			projectDurations = settings.projectDurations,
+			projectHtml = [];
+		$.each(projects, function(i, project) {
+			var name = project.name,
+				projectHtml.push('<h3>'+name+'</h3><ul>');
+			$.each(projectDurations[name], function(person, total) {
+				projectHtml.push('<li>'+person+': '+prettifyDuration(total)+'</li>');
+			});
+			projectHtml.push('</ul>');
+		});
+		$('#summaryTable').append(projectHtml.join('\n'));
+	},
 	prettifyDuration = function(duration) {
 		var durationObj = attn.formatDuration(duration),
 			hours = durationObj.hours,
@@ -234,6 +248,7 @@ var host = window.location.protocol+"//tiddlyspace.com",
 				console.log('project analysis finished');
 				console.log(settings.projectDurations);
 				updateGraphs();
+				updateSummaryTable();
 			});
 		});
 		$('#add_project').click(function() {
