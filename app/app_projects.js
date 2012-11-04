@@ -163,6 +163,176 @@ var host = window.location.protocol+"//tiddlyspace.com",
 		}
 		return durBits.join(":");
 	},
+	makeSunburstJSON = function() {
+		/*
+		"name": "all",
+		"children": [{
+			"name": "bpsf",
+			"children": [{
+				"name": "jnthnlstr",
+				"children": [{
+					"size": 8
+				}, {
+					"size": 4
+				}]
+			},	{
+				"name": "jshbrdly", "size": 4
+			}, {
+				"name": "chrssgden", "size": 6
+			}, {
+				"name": "dnnystrgss", "size": 2
+			}]
+		}, {
+			"name": "cdla",
+			"children": [{
+				"name": "jshbrdly", "size": 8
+			}, {
+				"name": "chrssgden", "size": 20
+			}, {
+				"name": "dnnystrgss", "size": 12
+			}]
+		}
+		*/
+		var json = {
+				"name": "all",
+				"children": []
+			},
+			ps = json.children,
+			projectDurations = settings.projectDurations,
+			timeDivisor = 1000 * 60 * 60; // to convert from ms to hours
+		$.each(settings.projectsByName, function(name, project) {
+			project = projectDurations[name];
+			ps.push({
+				"name": name,
+				"children": $.map(project, function(personTotal, person) {
+					return {
+						"name": person,
+						"size": total/timeDivisor
+					};
+				});
+			});
+		});
+		return json;
+	},
+	drawSunburst = function() {
+		var width = 400,
+		    height = 400,
+		    radius = Math.min(width, height) / 2,
+		    p = 5, // label padding
+		    duration = 750, // animation duration in ms
+		    json = makeSunburstJSON(),
+		    x = d3.scale.linear()
+			    .range([0, 2 * Math.PI]),
+			y = d3.scale.linear()
+			    .range([0, radius]),
+			color = d3.scale.category20c(),
+			vis = d3.select("#sunburst").append("svg")
+			    .attr("width", width)
+			    .attr("height", height)
+					.append("g")
+				    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")"),
+			partition = d3.layout.partition()
+			    .value(function(d) { return d.size; }),
+			arc = d3.svg.arc()
+			    .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
+			    .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx))); })
+			    .innerRadius(function(d) { return Math.max(0, y(d.y)); })
+			    .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); }),
+			nodes = partition.nodes(json),
+			path = vis.selectAll("path").data(nodes)
+				.enter().append("path")
+				.attr("d", arc)
+				.style("fill", function(d) { return d.depth ? color((d.children ? d : d.parent).name) : "#FFF"; })
+					.on("click", click),
+			text = vis.selectAll("text").data(nodes),
+			textEnter = text.enter().append("text")
+				.style("fill-opacity", function(d) {
+					return 2/(d.depth+1);
+				})
+				.style("font-size", function(d) {
+					return 2/(d.depth+1)+"em";
+				})
+				.style("fill", function(d) {
+					return brightness(color((d.children ? d : d.parent).name)) < 125 ? "#eee" : "#000";
+				})
+				.attr("text-anchor", function(d) {
+					return x(d.x + d.dx / 2) > Math.PI ? "end" : "start";
+				})
+				.attr("dy", ".2em")
+				.attr("transform", function(d) {
+					var multiline = (d.name || "").split(" ").length > 1,
+					angle = x(d.x + d.dx / 2) * 180 / Math.PI - 90,
+					rotate = angle + (multiline ? -.5 : 0);
+					return "rotate(" + rotate + ")translate(" + (y(d.y) + p) + ")rotate(" + (angle > 90 ? -180 : 0) + ")";
+				})
+				.on("click", click)
+				.append("tspan")
+					.attr("x", 0)
+					.text(function(d) { return d.depth ? d.name : ""; }),
+			click = function(d) {
+				path.transition()
+				  .duration(duration)
+				  .attrTween("d", arcTween(d));
+			  
+				// Somewhat of a hack as we rely on arcTween updating the scales.
+				text.style("visibility", function(e) {
+				    return isParentOf(d, e) ? null : d3.select(this).style("visibility");
+				})
+				.transition().duration(duration)
+				.attrTween("text-anchor", function(d) {
+					return function() {
+						return x(d.x + d.dx / 2) > Math.PI ? "end" : "start";
+					};
+				})
+				.attrTween("transform", function(d) {
+					var multiline = (d.name || "").split(" ").length > 1;
+					return function() {
+						var angle = x(d.x + d.dx / 2) * 180 / Math.PI - 90,
+						rotate = angle + (multiline ? -.5 : 0);
+						return "rotate(" + rotate + ")translate(" + (y(d.y) + p) + ")rotate(" + (angle > 90 ? -180 : 0) + ")";
+					};
+				})
+				.style("fill-opacity", function(e) { return isParentOf(d, e) ? 1 : 1e-6; })
+				.each("end", function(e) {
+					d3.select(this).style("visibility", isParentOf(d, e) ? null : "hidden");
+				});
+			},
+			arcTween = function(d) {
+				// Interpolate the scales!
+				var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
+				yd = d3.interpolate(y.domain(), [d.y, 1]),
+				yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
+				return function(d, i) {
+					return i
+					? function(t) { return arc(d); }
+					: function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); return arc(d); };
+				};
+			},
+			isParentOf = function(p, c) {
+				if (p === c) return true;
+				if (p.children) {
+					return p.children.some(function(d) {
+						return isParentOf(d, c);
+					});
+				}
+				return false;
+			},
+			colour = function(d) {
+				if (d.children) {
+					// There is a maximum of two children!
+					var colours = d.children.map(colour),
+					a = d3.hsl(colours[0]),
+					b = d3.hsl(colours[1]);
+					// L*a*b* might be better here...
+					return d3.hsl((a.h + b.h) / 2, a.s * 1.2, a.l / 1.2);
+				}
+				return d.colour || "#fff";
+			},
+			brightness = function(rgb) {
+				// http://www.w3.org/WAI/ER/WD-AERT/#color-contrast
+				return rgb.r * .299 + rgb.g * .587 + rgb.b * .114;
+			};
+	},
 	rebuildProjectObjectFromInputs = function() {
 		// refresh the object tracking the project configuration, by looking at the HTML
 		var projects = [],

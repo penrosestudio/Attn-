@@ -24,3 +24,8 @@
 	height: 30px;
 	width: 0; /* set to the correct width as percentages are calculated */
 }
+
+path {
+	stroke: #fff;
+	fill-rule: evenodd;
+}
