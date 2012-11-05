@@ -139,8 +139,10 @@ var host = window.location.protocol+"//tiddlyspace.com",
 			var name = project.name;
 			projectHtml.push('<h3>'+name+'</h3><ul>');
 			$.each(settings.team, function(i, person) {
-				var total = projectDurations[name][person].total;
-				projectHtml.push('<li>'+person+': '+prettifyDuration(total)+'</li>');
+				var personPeriods = projectDurations[name][person];
+				if(personPeriods) {
+					projectHtml.push('<li>'+person+': '+prettifyDuration(personPeriods.total)+'</li>');
+				}
 			});
 			projectHtml.push('</ul>');
 		});
@@ -206,16 +208,18 @@ var host = window.location.protocol+"//tiddlyspace.com",
 						"name": name,
 						"children": $.map(settings.team, function(person, i) {
 							var personPeriods = projectDurations[name][person];
-							return {
-								"name": person,
-								"children": $.map(personPeriods.periods, function(period, j) {
-									var totalMs = period.duration;
-									return {
-										"name": prettifyDuration(totalMs),
-										"size": totalMs/timeDivisor
-									}
-								})
-								
+							if(personPeriods) {
+								return {
+									"name": person,
+									"children": $.map(personPeriods.periods, function(period, j) {
+										var totalMs = period.duration;
+										return {
+											"name": prettifyDuration(totalMs),
+											"size": totalMs/timeDivisor
+										}
+									})
+									
+								}
 							}
 						})
 					}
@@ -235,7 +239,12 @@ var host = window.location.protocol+"//tiddlyspace.com",
 			    .range([0, 2 * Math.PI]),
 			y = d3.scale.linear()
 			    .range([0, radius]),
-			color = d3.scale.category20c(),
+			color = function() {
+				var c = d3.scale.category20c();
+				return function(d) {
+					return d.depth>1 ? color(d.parent) : c(d.name);
+				}
+			}(),
 			click = function(d) {
 				path.transition()
 				  .duration(duration)
@@ -315,8 +324,11 @@ var host = window.location.protocol+"//tiddlyspace.com",
 			path = vis.selectAll("path").data(nodes)
 				.enter().append("path")
 				.attr("d", arc)
+				.style("fill-opacity", function(d) {
+					return 2/(d.depth+1);
+				})
 				.style("fill", function(d) {
-					return d.depth ? color((d.children ? d : d.parent).name) : "#FFF";
+					return d.depth ? color(d) : "#FFF";
 				}).on("click", click),
 			text = vis.selectAll("text").data(nodes),
 			textEnter = text.enter().append("text")
